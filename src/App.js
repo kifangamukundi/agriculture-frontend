@@ -42,11 +42,9 @@ function App() {
               <Route path="/newUser">
                 <NewUser />
               </Route>
+
               <Route path="/products">
                 <ProductList />
-              </Route>
-              <Route path="/categories">
-                <CategoryList />
               </Route>
               <Route path="/product/:productId">
                 <Product />
@@ -54,6 +52,18 @@ function App() {
               <Route path="/newproduct">
                 <NewProduct />
               </Route>
+
+              {/* Categories */}
+              <Route path="/categories">
+                <CategoryList />
+              </Route>
+              <Route path="/category/:categoryId">
+                <Product />
+              </Route>
+              {/* <Route path="/newCategory">
+                <NewCategory />
+              </Route> */}
+              
             </div>
           </>
       </Switch>

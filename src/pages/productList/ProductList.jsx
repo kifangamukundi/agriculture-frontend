@@ -1,7 +1,8 @@
-import "./productList.css";
-import "../generics/generics.css";
-import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
+import "../layout/list.css";
+import { Description,
+  Delete,
+  Edit,
+  Pageview, } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,32 +21,43 @@ export default function ProductList() {
   };
 
   return (
-    <div className="productList">
-      <table className="styled-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {products.products.map(product => (
-                <tr key={product._id}>
-                    <td>{product._id}</td>
-                    <td>{product.title}</td>
-                    <td>{product.description}</td>
-                    <td>
-                    <Link to={"/product/" + product._id}>
-                      <button className="productListEdit">Edit</button>
-                    </Link>
-                      <button className="productListDelete" onClick={() => handleDelete(product._id)}>Delete</button>
-                    </td>
-                </tr>
-            ))}
-        </tbody>
-      </table>
+    <div className="list">
+      <div className="listTitleContainer">
+        <h1 className="listTitle">Products List</h1>
+        <Link to="/newProduct">
+          <button className="listAddButton">Create</button>
+        </Link>
+      </div>
+      <div className="listContainer">
+        <div className="listShow">
+
+        {products.products.map(product => (
+          <div className="listShowBottom">
+            <span className="listShowTitle">{product.title}</span>
+            <div className="listShowInfo">
+              <Description className="listShowIcon" />
+              <span className="listShowInfoTitle">{product.description}</span>
+            </div>
+            <div className="listShowActions">
+              <div className="listShowInfo">
+                <Link to={"/product/" + product._id}>
+                  <button className="listActionButton"><Pageview className="listShowIcon" /></button>
+                </Link>
+              </div>
+              <div className="listShowInfo">
+                <Link to={"/product/" + product._id}>
+                  <button className="listActionButton"><Edit className="listShowIcon" /></button>
+                </Link>
+              </div>
+              <div className="listShowInfo">
+                <button className="listActionButton" onClick={() => handleDelete(product._id)}><Delete className="listShowIcon" /></button>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        </div>
+      </div>
     </div>
   );
 }

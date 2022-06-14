@@ -1,6 +1,6 @@
 import { Link, useHistory, useLocation } from "react-router-dom";
 import "./product.css";
-import { Publish } from "@material-ui/icons";
+import { Description, Title, List, Publish } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { updateProduct, getProducts } from "../../redux/apiCalls/productCalls";
@@ -12,7 +12,8 @@ export default function Product() {
 
   const [state, setState] = useState({
     title: '',
-    description: ''
+    description: '',
+    categories: []
   }
   );
   const productId = location.pathname.split("/")[2];
@@ -30,7 +31,7 @@ export default function Product() {
     }
   }, [product]);
 
-  const { title, description } = state;
+  const { title, description, categories } = state;
 
   const handleTextChange = e => {
     let { name, value } = e.target;
@@ -44,43 +45,76 @@ export default function Product() {
   }
 
   return (
-    <div className="product">
-      <div className="productTitleContainer">
-        <h1 className="productTitle">Product</h1>
-        <Link to="/newproduct">
-          <button className="productAddButton">Create</button>
+    <div className="user">
+      <div className="userTitleContainer">
+        <h1 className="userTitle">Edit Product</h1>
+        <Link to="/newProduct">
+          <button className="userAddButton">Create</button>
         </Link>
       </div>
-    
-      <div className="productBottom">
-        <form className="productForm" onSubmit={handleOnSubmit}>
-          <div className="productFormLeft">
-            <label>Product Title</label>
-            <input 
-              type="text" 
-              name="title"
-              onChange={handleTextChange}
-              value={title || ""}
-            />
-            <label>Product Description</label>
-            <input 
-              type="text" 
-              name="description"
-              onChange={handleTextChange}
-              value={description || ""}
-            />
-          </div>
-          <div className="productFormRight">
-            <div className="productUpload">
-              <img src="#" alt="" className="productUploadImg" />
-              <label for="file">
-                <Publish />
-              </label>
-              <input type="file" id="file" style={{ display: "none" }} />
+      <div className="userContainer">
+        <div className="userShow">
+          <div className="userShowBottom">
+            <span className="userShowTitle">Product Details</span>
+            <div className="userShowInfo">
+              <Title className="userShowIcon" />
+              <span className="userShowInfoTitle">{product.title}</span>
             </div>
-            <button className="productButton" onChange={handleTextChange}>Update</button>
+            <div className="userShowInfo">
+              <Description className="userShowIcon" />
+              <span className="userShowInfoTitle">{product.description}</span>
+            </div>
+            <span className="userShowTitle">Category List</span>
+
+            {product.categories.map(category => (
+            <div className="userShowInfo">
+              <List className="userShowIcon" />
+              <span className="userShowInfoTitle" key={category._id}>{category.title}</span>
+            </div>
+            ))}
           </div>
-        </form>
+        </div>
+        <div className="userUpdate">
+          <span className="userUpdateTitle">Edit</span>
+          <form className="userUpdateForm" onSubmit={handleOnSubmit}>
+            <div className="userUpdateLeft">
+              <div className="userUpdateItem">
+                <label>Title</label>
+                <input
+                  type="text" 
+                  name="title"
+                  onChange={handleTextChange}
+                  value={title || ""}
+                  className="userUpdateInput"
+                />
+              </div>
+              <div className="userUpdateItem">
+                <label>Description</label>
+                <input
+                  type="text" 
+                  name="description"
+                  onChange={handleTextChange}
+                  value={description || ""}
+                  className="userUpdateInput"
+                />
+              </div>
+            </div>
+            <div className="userUpdateRight">
+              <div className="userUpdateUpload">
+                <img
+                  className="userUpdateImg"
+                  src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                  alt=""
+                />
+                <label htmlFor="file">
+                  <Publish className="userUpdateIcon" />
+                </label>
+                <input type="file" id="file" style={{ display: "none" }} />
+              </div>
+              <button className="userUpdateButton" onChange={handleTextChange}>Update</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

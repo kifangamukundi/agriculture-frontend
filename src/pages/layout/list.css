@@ -1,0 +1,170 @@
+.list {
+    flex: 5;
+    padding: 20px;
+  }
+  
+  .listTitleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .listAddButton {
+    width: 80px;
+    border: none;
+    padding: 5px;
+    background-color: teal;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .listActionButton {
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      background-color: teal;
+      color: white;
+      cursor: pointer;
+      margin-right: 20px;
+    }
+  
+  .listContainer {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  .listShow {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  
+  .listUpdate {
+    flex: 2;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    margin-left: 20px;
+  }
+  
+  .listShowTop {
+    display: flex;
+    align-items: center;
+  }
+  
+  .listShowImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .listShowTopTitle {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+  
+  .listShowlistname {
+    font-weight: 600;
+  }
+  
+  .listShowlistTitle {
+    font-weight: 300;
+  }
+  
+  .listShowBottom{
+      margin-top: 20px;
+      width: 33.3333%;
+  }
+  
+  .listShowTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(175, 170, 170);
+  }
+  
+  .listShowInfo{
+      display: flex;
+      align-items: center;
+      margin: 20px 0px;
+      color: #444;
+  }
+  .listShowActions{
+      display: flex;
+      align-items: center;
+  }
+  
+  .listShowIcon{
+      font-size: 16px !important;
+  }
+  
+  .listShowInfoTitle{
+      margin-left: 10px;
+  }
+  
+  .listUpdateTitle{
+      font-size: 24px;
+      font-weight: 600;
+  }
+  
+  .listUpdateForm{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+  }
+  
+  .listUpdateItem{
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+  }
+  
+  .listUpdateItem>label{
+      margin-bottom: 5px;
+      font-size: 14px;
+  }
+  
+  .listUpdateInput{
+      border: none;
+      width: 250px;
+      height: 30px;
+      border-bottom: 1px solid gray;
+  }
+  
+  .listUpdateRight{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  
+  .listUpdateUpload{
+      display: flex;
+      align-items: center;
+  }
+  
+  .listUpdateImg{
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-right: 20px;
+  }
+  
+  .listUpdateIcon{
+      cursor: pointer;
+  }
+  
+  .listUpdateButton{
+      border-radius: 5px;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      background-color: darkblue;
+      color: white;
+      font-weight: 600;
+  }
