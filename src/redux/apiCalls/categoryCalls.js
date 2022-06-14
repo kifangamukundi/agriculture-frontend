@@ -40,7 +40,7 @@ export const deleteCategory = async (id, dispatch) => {
 export const updateCategory = async (id, category, dispatch) => {
   dispatch(updateCategoryStart());
   try {
-    const res = await userRequest.patch(`/category`, category);
+    const res = await userRequest.patch(`/category/${id}`, category);
     dispatch(updateCategorySuccess({ id, category }));
   } catch (err) {
     dispatch(updateCategoryFailure());

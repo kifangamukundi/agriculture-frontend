@@ -40,7 +40,7 @@ export const deleteProduce = async (id, dispatch) => {
 export const updateProduce = async (id, produce, dispatch) => {
   dispatch(updateProduceStart());
   try {
-    const res = await userRequest.patch(`/produce`, produce);
+    const res = await userRequest.patch(`/produce/${id}`, produce);
     dispatch(updateProduceSuccess({ id, produce }));
   } catch (err) {
     dispatch(updateProduceFailure());

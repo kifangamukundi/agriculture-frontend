@@ -1,17 +1,14 @@
-import { Link, useHistory, useParams, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import "./product.css";
-import Chart from "../../components/chart/Chart";
 import { Publish } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useMemo, useState } from "react";
-import { userRequest } from "../../requestMethods";
+import { useEffect, useState } from "react";
 import { updateProduct, getProducts } from "../../redux/apiCalls/productCalls";
 
 export default function Product() {
   let dispatch = useDispatch();
   let history = useHistory();
   const location = useLocation();
-  let { id } = useParams();
 
   const [state, setState] = useState({
     title: '',

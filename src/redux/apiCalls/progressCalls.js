@@ -39,7 +39,7 @@ export const deleteProgress = async (id, dispatch) => {
 export const updateProgress = async (id, progress, dispatch) => {
   dispatch(updateProgressStart());
   try {
-    const res = await userRequest.patch(`/progress`, progress);
+    const res = await userRequest.patch(`/progress/${id}`, progress);
     dispatch(updateProgressSuccess({ id, progress }));
   } catch (err) {
     dispatch(updateProgressFailure());

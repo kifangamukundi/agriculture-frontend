@@ -6,6 +6,8 @@ import produceReducer from "./produceRedux";
 import progressReducer from "./progressRedux";
 import collectionCenterReducer from "./collectionCenterRedux";
 import collectionLocationReducer from "./collectionLocationRedux";
+import countyReducer from "./countyRedux";
+import countyPlaceReducer from "./countyPlaceRedux";
 import {
   persistStore,
   persistReducer,
@@ -32,6 +34,8 @@ const rootReducer = combineReducers({
   progress: progressReducer,
   collectionCenter: collectionCenterReducer,
   collectionLocation: collectionLocationReducer,
+  county: countyReducer,
+  countyPlace: countyPlaceReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

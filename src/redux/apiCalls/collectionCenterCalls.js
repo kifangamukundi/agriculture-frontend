@@ -39,7 +39,7 @@ export const deleteCollectionCenter = async (id, dispatch) => {
 export const updateCollectionCenter = async (id, collectionCenter, dispatch) => {
   dispatch(updateCollectionCenterStart());
   try {
-    const res = await userRequest.patch(`/collectionCenter`, collectionCenter);
+    const res = await userRequest.patch(`/collectionCenter/${id}`, collectionCenter);
     dispatch(updateCollectionCenterSuccess({ id, collectionCenter }));
   } catch (err) {
     dispatch(updateCollectionCenterFailure());
