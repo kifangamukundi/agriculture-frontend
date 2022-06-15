@@ -15,6 +15,7 @@ import ProductList from "./pages/productList/ProductList";
 import CategoryList from "./pages/categoryList/CategoryList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
+import NewCategory from "./pages/newCategory/NewCategory";
 import Login from "./pages/login/Login";
 import { useSelector } from "react-redux";
 
@@ -60,9 +61,9 @@ function App() {
               <Route path="/category/:categoryId">
                 <Product />
               </Route>
-              {/* <Route path="/newCategory">
+              <Route path="/newCategory">
                 <NewCategory />
-              </Route> */}
+              </Route>
               
             </div>
           </>

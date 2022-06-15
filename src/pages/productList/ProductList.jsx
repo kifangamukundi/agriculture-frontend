@@ -23,7 +23,7 @@ export default function ProductList() {
   return (
     <div className="list">
       <div className="listTitleContainer">
-        <h1 className="listTitle">Products List</h1>
+        <h1 className="listTitle">Crops List</h1>
         <Link to="/newProduct">
           <button className="listAddButton">Create</button>
         </Link>
