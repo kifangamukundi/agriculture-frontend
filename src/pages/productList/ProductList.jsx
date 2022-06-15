@@ -10,7 +10,7 @@ import { deleteProduct, getProducts } from "../../redux/apiCalls/productCalls";
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
+  const products = useSelector((state) => state.product.products.products);
 
   useEffect(() => {
     getProducts(dispatch);
@@ -31,8 +31,8 @@ export default function ProductList() {
       <div className="listContainer">
         <div className="listShow">
 
-        {products.products.map(product => (
-          <div className="listShowBottom">
+        {products && products.length ? products.map(product => (
+          <div className="listShowBottom" key={product._id}>
             <span className="listShowTitle">{product.title}</span>
             <div className="listShowInfo">
               <Description className="listShowIcon" />
@@ -54,7 +54,7 @@ export default function ProductList() {
               </div>
             </div>
           </div>
-        ))}
+        )): null}
 
         </div>
       </div>

@@ -10,7 +10,7 @@ import { deleteCategory, getCategories } from "../../redux/apiCalls/categoryCall
 
 export default function CategoryList() {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.category.categories);
+  const categories = useSelector((state) => state.category.categories.categories);
 
   useEffect(() => {
     getCategories(dispatch);
@@ -31,8 +31,8 @@ export default function CategoryList() {
       <div className="listContainer">
         <div className="listShow">
 
-        {categories.categories.map(category => (
-          <div className="listShowBottom">
+        {categories && categories.length ? categories.map(category => (
+          <div className="listShowBottom" key={category._id}>
             <span className="listShowTitle">{category.title}</span>
             <div className="listShowInfo">
               <Description className="listShowIcon" />
@@ -54,7 +54,7 @@ export default function CategoryList() {
               </div>
             </div>
           </div>
-        ))}
+        )): null}
 
         </div>
       </div>
