@@ -6,7 +6,7 @@ let TOKEN = ""
 if ("persist:root" in localStorage) {
   TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.accessToken;
 } else {
-  TOKEN = ""
+  TOKEN = {}
 }
 
 export const publicRequest = axios.create({
