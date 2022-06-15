@@ -33,9 +33,19 @@ export default function ProductList() {
 
         {products && products.length ? products.map(product => (
           <div className="listShowBottom" key={product._id}>
-            <span className="listShowTitle">{product.title}</span>
+
+            <div className="listUpdateRight">
+              <div className="listUpdateUpload">
+                    <img
+                    className="listUpdateImg"
+                    src="https://cdn.pixabay.com/photo/2020/08/26/15/47/autumn-5519836_960_720.png"
+                    alt=""
+                    />
+              </div>
+            </div>
+
+            <span className="listShowTitle"><h1>{product.title}</h1></span>
             <div className="listShowInfo">
-              <Description className="listShowIcon" />
               <span className="listShowInfoTitle">{product.description}</span>
             </div>
             <div className="listShowActions">
