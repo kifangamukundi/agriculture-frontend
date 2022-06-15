@@ -38,7 +38,7 @@ export default function ProductList() {
               <div className="listUpdateUpload">
                     <img
                     className="listUpdateImg"
-                    src="https://cdn.pixabay.com/photo/2020/08/26/15/47/autumn-5519836_960_720.png"
+                    src={product.productImage}
                     alt=""
                     />
               </div>

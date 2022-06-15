@@ -60,7 +60,7 @@ export default function ViewProduct() {
               <div className="viewUpdateUpload">
                     <img
                     className="viewUpdateImg"
-                    src="https://cdn.pixabay.com/photo/2017/06/21/18/44/exam-2428208_960_720.png"
+                    src={product.productImage}
                     alt=""
                     />
               </div>

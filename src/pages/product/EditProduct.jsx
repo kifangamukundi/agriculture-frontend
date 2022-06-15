@@ -103,7 +103,7 @@ export default function Product() {
               <div className="editUpdateUpload">
                 <img
                   className="editUpdateImg"
-                  src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                  src={product.productImage}
                   alt=""
                 />
                 <label htmlFor="file">
