@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./newProduct.css";
+import "../layout/new.css";
 import {
   getStorage,
   ref,
@@ -70,18 +70,11 @@ export default function NewProduct() {
   };
 
   return (
-    <div className="newProduct">
-      <h1 className="addProductTitle">New Product</h1>
-      <form className="addProductForm">
-        <div className="addProductItem">
-          <label>Image</label>
-          <input
-            type="file"
-            id="file"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-        </div>
-        <div className="addProductItem">
+    <div className="newItem">
+      <h1 className="newItemTitle">New Product</h1>
+      <form className="newItemForm">
+        <div className="newItemItem">
+
           <label>Title</label>
           <input
             name="title"
@@ -90,18 +83,24 @@ export default function NewProduct() {
             onChange={handleChange}
           />
         </div>
-        <div className="addProductItem">
+        <div className="newItemItem">
           <label>Description</label>
           <input
             name="description"
             type="text"
             placeholder="description..."
             onChange={handleChange}
+           />
+        </div>
+        <div className="addnewItem">
+          <label>Image</label>
+          <input
+            type="file"
+            id="file"
+            onChange={(e) => setFile(e.target.files[0])}
           />
         </div>
-        <button onClick={handleClick} className="addProductButton">
-          Create
-        </button>
+        <button onClick={handleClick} className="newItemButton">Create</button>
       </form>
     </div>
   );

@@ -24,7 +24,7 @@ export default function CategoryList() {
     <div className="list">
       <div className="listTitleContainer">
         <h1 className="listTitle">Category List</h1>
-        <Link to="/newCategory">
+        <Link to="/NewCategory">
           <button className="listAddButton">Create</button>
         </Link>
       </div>

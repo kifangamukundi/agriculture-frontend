@@ -1,5 +1,5 @@
+import "../layout/edit.css";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import "./product.css";
 import { Description, Title, List, Publish } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -31,7 +31,7 @@ export default function Product() {
     }
   }, [product]);
 
-  const { title, description, categories } = state;
+  const { title, description } = state;
 
   const handleTextChange = e => {
     let { name, value } = e.target;
@@ -45,73 +45,73 @@ export default function Product() {
   }
 
   return (
-    <div className="user">
-      <div className="userTitleContainer">
-        <h1 className="userTitle">Edit Product</h1>
-        <Link to="/newProduct">
-          <button className="userAddButton">Create</button>
+    <div className="edit">
+      <div className="editTitleContainer">
+        <h1 className="editTitle">Edit Product</h1>
+        <Link to="/ProductList">
+          <button className="editAddButton">All</button>
         </Link>
       </div>
-      <div className="userContainer">
-        <div className="userShow">
-          <div className="userShowBottom">
-            <span className="userShowTitle">Product Details</span>
-            <div className="userShowInfo">
-              <Title className="userShowIcon" />
-              <span className="userShowInfoTitle">{product.title}</span>
+      <div className="editContainer">
+        <div className="editShow">
+          <div className="editShowBottom">
+            <span className="editShowTitle">Product Details</span>
+            <div className="editShowInfo">
+              <Title className="editShowIcon" />
+              <span className="editShowInfoTitle">{product.title}</span>
             </div>
-            <div className="userShowInfo">
-              <Description className="userShowIcon" />
-              <span className="userShowInfoTitle">{product.description}</span>
+            <div className="editShowInfo">
+              <Description className="editShowIcon" />
+              <span className="editShowInfoTitle">{product.description}</span>
             </div>
-            <span className="userShowTitle">Category List</span>
+            <span className="editShowTitle">Category List</span>
 
             {product.categories.map(category => (
-            <div className="userShowInfo">
-              <List className="userShowIcon" />
-              <span className="userShowInfoTitle" key={category._id}>{category.title}</span>
+            <div className="editShowInfo">
+              <List className="editShowIcon" />
+              <span className="editShowInfoTitle" key={category._id}>{category.title}</span>
             </div>
             ))}
           </div>
         </div>
-        <div className="userUpdate">
-          <span className="userUpdateTitle">Edit</span>
-          <form className="userUpdateForm" onSubmit={handleOnSubmit}>
-            <div className="userUpdateLeft">
-              <div className="userUpdateItem">
+        <div className="editUpdate">
+          <span className="editUpdateTitle">Edit</span>
+          <form className="editUpdateForm" onSubmit={handleOnSubmit}>
+            <div className="editUpdateLeft">
+              <div className="editUpdateItem">
                 <label>Title</label>
                 <input
                   type="text" 
                   name="title"
                   onChange={handleTextChange}
                   value={title || ""}
-                  className="userUpdateInput"
+                  className="editUpdateInput"
                 />
               </div>
-              <div className="userUpdateItem">
+              <div className="editUpdateItem">
                 <label>Description</label>
                 <input
                   type="text" 
                   name="description"
                   onChange={handleTextChange}
                   value={description || ""}
-                  className="userUpdateInput"
+                  className="editUpdateInput"
                 />
               </div>
             </div>
-            <div className="userUpdateRight">
-              <div className="userUpdateUpload">
+            <div className="editUpdateRight">
+              <div className="editUpdateUpload">
                 <img
-                  className="userUpdateImg"
+                  className="editUpdateImg"
                   src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
                   alt=""
                 />
                 <label htmlFor="file">
-                  <Publish className="userUpdateIcon" />
+                  <Publish className="editUpdateIcon" />
                 </label>
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
-              <button className="userUpdateButton" onChange={handleTextChange}>Update</button>
+              <button className="editUpdateButton" onChange={handleTextChange}>Update</button>
             </div>
           </form>
         </div>

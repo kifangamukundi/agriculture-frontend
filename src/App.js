@@ -11,11 +11,19 @@ import {
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
 import NewUser from "./pages/newUser/NewUser";
-import ProductList from "./pages/productList/ProductList";
-import CategoryList from "./pages/categoryList/CategoryList";
-import Product from "./pages/product/Product";
-import NewProduct from "./pages/newProduct/NewProduct";
-import NewCategory from "./pages/newCategory/NewCategory";
+
+// CRUD routes for Products
+import NewProduct from "./pages/product/NewProduct"; 
+import ViewProduct from "./pages/product/ViewProduct";
+import EditProduct from "./pages/product/EditProduct";
+import ProductList from "./pages/product/ProductList";
+
+// CRUD routes for Categories
+import NewCategory from "./pages/category/NewCategory";
+import ViewCategory from "./pages/category/ViewCategory";
+import EditCategory from "./pages/category/EditCategory";
+import CategoryList from "./pages/category/CategoryList";
+
 import Login from "./pages/login/Login";
 import { useSelector } from "react-redux";
 
@@ -44,25 +52,31 @@ function App() {
                 <NewUser />
               </Route>
 
-              <Route path="/products">
-                <ProductList />
-              </Route>
-              <Route path="/product/:productId">
-                <Product />
-              </Route>
-              <Route path="/newproduct">
+              <Route path="/NewProduct">
                 <NewProduct />
+              </Route>
+              <Route path="/ViewProduct/:productId">
+                <ViewProduct />
+              </Route>
+              <Route path="/EditProduct/:productId">
+                <EditProduct />
+              </Route>
+              <Route path="/ProductList">
+                <ProductList />
               </Route>
 
               {/* Categories */}
-              <Route path="/categories">
-                <CategoryList />
-              </Route>
-              <Route path="/category/:categoryId">
-                <Product />
-              </Route>
-              <Route path="/newCategory">
+              <Route path="/NewCategory">
                 <NewCategory />
+              </Route>
+              <Route path="/ViewCategory/:categoryId">
+                <ViewCategory />
+              </Route>
+              <Route path="/EditCategory/:categoryId">
+                <EditCategory />
+              </Route>
+              <Route path="/CategoryList">
+                <CategoryList />
               </Route>
               
             </div>

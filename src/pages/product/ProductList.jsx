@@ -23,8 +23,8 @@ export default function ProductList() {
   return (
     <div className="list">
       <div className="listTitleContainer">
-        <h1 className="listTitle">Crops List</h1>
-        <Link to="/newProduct">
+        <h1 className="listTitle">Products List</h1>
+        <Link to="/NewProduct">
           <button className="listAddButton">Create</button>
         </Link>
       </div>
@@ -40,12 +40,12 @@ export default function ProductList() {
             </div>
             <div className="listShowActions">
               <div className="listShowInfo">
-                <Link to={"/product/" + product._id}>
+                <Link to={"/ViewProduct/" + product._id}>
                   <button className="listActionButton"><Pageview className="listShowIcon" /></button>
                 </Link>
               </div>
               <div className="listShowInfo">
-                <Link to={"/product/" + product._id}>
+                <Link to={"/EditProduct/" + product._id}>
                   <button className="listActionButton"><Edit className="listShowIcon" /></button>
                 </Link>
               </div>

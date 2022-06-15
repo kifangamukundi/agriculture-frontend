@@ -63,15 +63,6 @@ export default function NewCategory() {
       <form className="newItemForm">
         <div className="newItemItem">
 
-        <div className="addnewItem">
-          <label>Image</label>
-          <input
-            type="file"
-            id="file"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-        </div>
-
           <label>Title</label>
           <input
             name="title"
@@ -88,6 +79,14 @@ export default function NewCategory() {
             placeholder="description..."
             onChange={handleChange}
            />
+        </div>
+        <div className="addnewItem">
+          <label>Image</label>
+          <input
+            type="file"
+            id="file"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
         </div>
         <button onClick={handleClick} className="newItemButton">Create</button>
       </form>
