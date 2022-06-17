@@ -1,5 +1,5 @@
 import "../layout/edit.css";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useNavigate , useLocation } from "react-router-dom";
 import { Description, Title, List, Publish } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import { updateProduct, getProducts } from "../../redux/apiCalls/productCalls";
 
 export default function Product() {
   let dispatch = useDispatch();
-  let history = useHistory();
+  let navigate = useNavigate ();
   const location = useLocation();
 
   const [state, setState] = useState({
@@ -41,7 +41,7 @@ export default function Product() {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     updateProduct(productId, state, dispatch);
-    history.push("/");
+    navigate("/");
   }
 
   return (

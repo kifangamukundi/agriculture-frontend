@@ -1,13 +1,7 @@
-import Sidebar from "./components/sidebar/Sidebar";
-import Topbar from "./components/topbar/Topbar";
+import Layout from "./components/layout/Layout";
 import "./App.css";
 import Home from "./pages/home/Home";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
 import NewUser from "./pages/newUser/NewUser";
@@ -31,57 +25,25 @@ function App() {
   // const admin = useSelector((state) => state.user.currentUser.roles["ROLE_ADMIN"]);
   return (
     <Router>
-      <Switch>
-        <Route path="/login">
-          <Login />
+      <Routes>
+        <Route path="/" element={<Layout />} >
+          <Route exact path="/Login" element={<Login />} />
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/users" element={<UserList />} />
+          <Route exact path="/user/:userId" element={<User />} />
+          <Route exact path="/newUser" element={<NewUser />} />
+          <Route exact path="/NewProduct" element={<NewProduct />} />
+          <Route exact path="/ViewProduct/:productId" element={<ViewProduct />} />
+          <Route exact path="/EditProduct/:productId" element={<EditProduct />} />
+          <Route exact path="/ProductList" element={<ProductList />} />
+
+          {/* Categories */}
+          <Route exact path="/NewCategory" element={<NewCategory />} />
+          <Route exact path="/ViewCategory/:categoryId" element={<ViewCategory />} />
+          <Route exact path="/EditCategory/:categoryId" element={<EditCategory />} />
+          <Route exact path="/CategoryList" element={<CategoryList />} />
         </Route>
-          <>
-            <Topbar />
-            <div className="container">
-              <Sidebar />
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/users">
-                <UserList />
-              </Route>
-              <Route path="/user/:userId">
-                <User />
-              </Route>
-              <Route path="/newUser">
-                <NewUser />
-              </Route>
-
-              <Route path="/NewProduct">
-                <NewProduct />
-              </Route>
-              <Route path="/ViewProduct/:productId">
-                <ViewProduct />
-              </Route>
-              <Route path="/EditProduct/:productId">
-                <EditProduct />
-              </Route>
-              <Route path="/ProductList">
-                <ProductList />
-              </Route>
-
-              {/* Categories */}
-              <Route path="/NewCategory">
-                <NewCategory />
-              </Route>
-              <Route path="/ViewCategory/:categoryId">
-                <ViewCategory />
-              </Route>
-              <Route path="/EditCategory/:categoryId">
-                <EditCategory />
-              </Route>
-              <Route path="/CategoryList">
-                <CategoryList />
-              </Route>
-              
-            </div>
-          </>
-      </Switch>
+      </Routes>
     </Router>
   );
 }
