@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/apiCalls/userCalls";
 
 const Login = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
   // New feature
   const [values, setValues] = useState({
     username: "",
@@ -42,7 +42,7 @@ const Login = () => {
   const handleClick = (e) => {
     e.preventDefault();
     login(dispatch, { ...values });
-    // history.push("/");
+    // navigate("/");
   };
 
 

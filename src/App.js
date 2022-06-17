@@ -26,8 +26,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />} >
           <Route exact path="/Login" element={<Login />} />
+        <Route path="/" element={<Layout />} >
           <Route exact path="/" element={<Home />} />
           <Route exact path="/users" element={<UserList />} />
           <Route exact path="/user/:userId" element={<User />} />
