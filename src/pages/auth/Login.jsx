@@ -42,7 +42,7 @@ const Login = () => {
   const handleClick = (e) => {
     e.preventDefault();
     login(dispatch, { ...values });
-    // navigate("/");
+    navigate("/");
   };
 
 
@@ -55,7 +55,7 @@ const Login = () => {
   return (
     <div className="auth">
       <form onSubmit={handleClick}>
-        <h1>Login</h1>
+        <h1 className="authH1">Login</h1>
         {inputs.map((input) => (
           <FormInput
             key={input.id}
@@ -64,7 +64,7 @@ const Login = () => {
             onChange={onChange}
           />
         ))}
-        <button>Submit</button>
+        <button className="authButton">Submit</button>
       </form>
     </div>
   );

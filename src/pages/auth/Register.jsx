@@ -79,7 +79,7 @@ const Register = () => {
   return (
     <div className="auth">
       <form onSubmit={handleSubmit}>
-        <h1>Register</h1>
+        <h1 className="authH1">Register</h1>
         {inputs.map((input) => (
           <FormInput
             key={input.id}
@@ -88,7 +88,7 @@ const Register = () => {
             onChange={onChange}
           />
         ))}
-        <button>Submit</button>
+        <button className="authButton">Submit</button>
       </form>
     </div>
   );

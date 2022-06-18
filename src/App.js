@@ -18,7 +18,9 @@ import ViewCategory from "./pages/category/ViewCategory";
 import EditCategory from "./pages/category/EditCategory";
 import CategoryList from "./pages/category/CategoryList";
 
-import Login from "./pages/login/Login";
+// import Login from "./pages/login/Login";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
     <Router>
       <Routes>
           <Route exact path="/Login" element={<Login />} />
+          <Route exact path="/Register" element={<Register />} />
         <Route path="/" element={<Layout />} >
           <Route exact path="/" element={<Home />} />
           <Route exact path="/users" element={<UserList />} />
