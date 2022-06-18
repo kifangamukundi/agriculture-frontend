@@ -1,7 +1,12 @@
 import { useState } from "react";
 import FormInput from "./FormInput";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { signUp } from "../../redux/apiCalls/userCalls";
 
 const Register = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [values, setValues] = useState({
     firstName: "",
     lastName: "",
@@ -68,6 +73,8 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    signUp(dispatch, { ...values });
+    navigate("/login");
   };
 
   const onChange = (e) => {

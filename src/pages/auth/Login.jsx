@@ -6,6 +6,7 @@ import { login } from "../../redux/apiCalls/userCalls";
 
 const Login = () => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   // New feature
   const [values, setValues] = useState({
     username: "",
@@ -37,7 +38,6 @@ const Login = () => {
     },
   ];
 
-  const dispatch = useDispatch();
 
   const handleClick = (e) => {
     e.preventDefault();
