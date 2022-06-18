@@ -65,6 +65,7 @@ const Login = () => {
           />
         ))}
         <button className="authButton">Submit</button>
+        <label className="authLabel">Don't have an account? <Link to="/Register">Register</Link></label>
       </form>
     </div>
   );

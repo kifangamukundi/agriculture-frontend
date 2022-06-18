@@ -1,6 +1,7 @@
 import Layout from "./components/layout/Layout";
 import "./App.css";
 import Home from "./pages/home/Home";
+import Landing from "./pages/landing/Landing";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
@@ -30,8 +31,9 @@ function App() {
       <Routes>
           <Route exact path="/Login" element={<Login />} />
           <Route exact path="/Register" element={<Register />} />
-        <Route path="/" element={<Layout />} >
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Landing />} />
+        <Route element={<Layout />} >
+          <Route exact path="/DashBoard" element={<Home />} />
           <Route exact path="/users" element={<UserList />} />
           <Route exact path="/user/:userId" element={<User />} />
           <Route exact path="/newUser" element={<NewUser />} />
