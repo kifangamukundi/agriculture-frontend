@@ -20,6 +20,7 @@ const FormInput = (props) => {
           inputProps.name === "confirmPassword" && setFocused(true)
         }
         focused={focused.toString()}
+        className="authInput"
       />
       <span className="authSpan">{errorMessage}</span>
     </div>

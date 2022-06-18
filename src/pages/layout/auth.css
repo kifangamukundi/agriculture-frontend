@@ -44,7 +44,7 @@
     width: 280px;
 }
 
-input{
+.authInput{
     padding: 15px;
     margin: 10px 0px;
     border-radius: 5px;

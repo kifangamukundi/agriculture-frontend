@@ -11,6 +11,7 @@ import { deleteProduct, getProducts } from "../../redux/apiCalls/productCalls";
 export default function ProductList() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products.products);
+  const user = useSelector((state) => state?.user?.currentUser?.roles);
 
   useEffect(() => {
     getProducts(dispatch);
@@ -48,20 +49,29 @@ export default function ProductList() {
             <div className="listShowInfo">
               <span className="listShowInfoTitle">{product.description}</span>
             </div>
+
             <div className="listShowActions">
+              
               <div className="listShowInfo">
                 <Link to={"/ViewProduct/" + product._id}>
                   <button className="listActionButton"><Pageview className="listShowIcon" /></button>
                 </Link>
               </div>
-              <div className="listShowInfo">
-                <Link to={"/EditProduct/" + product._id}>
-                  <button className="listActionButton"><Edit className="listShowIcon" /></button>
-                </Link>
-              </div>
-              <div className="listShowInfo">
-                <button className="listActionButton" onClick={() => handleDelete(product._id)}><Delete className="listShowIcon" /></button>
-              </div>
+
+              {user?.includes("ROLE_MODERATOR") && (
+                <div className="listShowInfo">
+                  <Link to={"/EditProduct/" + product._id}>
+                    <button className="listActionButton"><Edit className="listShowIcon" /></button>
+                  </Link>
+                </div>
+              )}
+
+              {user?.includes("ROLE_ADMIN") && (
+                <div className="listShowInfo">
+                  <button className="listActionButton" onClick={() => handleDelete(product._id)}><Delete className="listShowIcon" /></button>
+                </div>
+              )}
+
             </div>
           </div>
         )): null}

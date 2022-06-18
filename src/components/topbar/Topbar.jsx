@@ -1,8 +1,10 @@
 import React from "react";
 import "./topbar.css";
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+import { useSelector } from "react-redux";
 
 export default function Topbar() {
+  const user = useSelector((state) => state?.user?.currentUser?.username);
   return (
     <div className="topbar">
       <div className="topbarWrapper">
@@ -10,6 +12,7 @@ export default function Topbar() {
           <span className="logo">AgriPortal</span>
         </div>
         <div className="topRight">
+            <p>Hello, {user}</p>
           <div className="topbarIconContainer">
             <NotificationsNone />
             <span className="topIconBadge">2</span>
