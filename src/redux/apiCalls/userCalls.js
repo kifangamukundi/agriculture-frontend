@@ -2,9 +2,12 @@ import { publicRequest, userRequest } from "../../requestMethods";
 import { loginFailure, 
   loginStart, 
   loginSuccess, 
-  signUpFailure, 
   signUpStart, 
-  signUpSuccess } from "../userRedux";
+  signUpSuccess,
+  signUpFailure, 
+  signOutStart, 
+  signOutSuccess, 
+  signOutFailure } from "../userRedux";
 
 export const login = async (dispatch, user) => {
     dispatch(loginStart());
@@ -23,5 +26,14 @@ export const login = async (dispatch, user) => {
       dispatch(signUpSuccess(res.data));
     } catch (err) {
       dispatch(signUpFailure());
+    }
+  };
+  export const signOut = async (dispatch, user) => {
+    dispatch(signOutStart());
+    try {
+      const res = await localStorage.removeItem("user");
+      dispatch(signOutSuccess(res.data));
+    } catch (err) {
+      dispatch(signOutFailure());
     }
   };

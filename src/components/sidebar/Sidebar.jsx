@@ -1,20 +1,18 @@
 import "./sidebar.css";
-import {
-  Home,
-  People,
-  MonetizationOn,
-  AddLocation,
-  Map,
-  Flag,
-  GpsFixed,
-  LocalFlorist,
-  Autorenew,
-  Assessment,
-  Message,
-  Timeline,
-  Storefront,
-  Category,
-} from "@material-ui/icons";
+import HomeIcon from '@mui/icons-material/Home';
+import PeopleIcon from '@mui/icons-material/People';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import PaidIcon from '@mui/icons-material/Paid';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import CategoryIcon from '@mui/icons-material/Category';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PushPinIcon from '@mui/icons-material/PushPin';
+import FlagIcon from '@mui/icons-material/Flag';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import CollectionsIcon from '@mui/icons-material/Collections';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import MessageIcon from '@mui/icons-material/Message';
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -25,10 +23,10 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
               {/* I removed the active class below */}
-            <Link to="/" className="link">
+            <Link to="/Dashboard" className="link">
             <li className="sidebarListItem">
-              <Home className="sidebarIcon" />
-              Home
+              <HomeIcon className="sidebarIcon" color="action" />
+              Dashboard
             </li>
             </Link>
           </ul>
@@ -38,16 +36,16 @@ export default function Sidebar() {
           <ul className="sidebarList">
             <Link to="/" className="link">
             <li className="sidebarListItem">
-              <People className="sidebarIcon" />
+              <PeopleIcon className="sidebarIcon" color="action" />
               Manage Users
             </li>
             </Link>
             <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
+              <AnalyticsIcon className="sidebarIcon" color="action" />
               Analytics
             </li>
             <li className="sidebarListItem">
-              <MonetizationOn className="sidebarIcon" />
+              <PaidIcon className="sidebarIcon" color="action" />
               Sales
             </li>
           </ul>
@@ -57,38 +55,38 @@ export default function Sidebar() {
           <ul className="sidebarList">
             <Link to="/ProductList" className="link">
               <li className="sidebarListItem">
-                <Storefront className="sidebarIcon" />
+                <ProductionQuantityLimitsIcon className="sidebarIcon" color="action" />
                 Products
               </li>
             </Link>
 
             <Link to="/CategoryList" className="link">
               <li className="sidebarListItem">
-                <Category className="sidebarIcon" />
+                <CategoryIcon className="sidebarIcon" color="action" />
                 Categories
               </li>
             </Link>
             <Link to="/CategoryList" className="link">
               <li className="sidebarListItem">
-                <AddLocation className="sidebarIcon" />
+                <LocationOnIcon className="sidebarIcon" color="action" />
                 Collection Locations
               </li>
             </Link>
             <Link to="/CategoryList" className="link">
               <li className="sidebarListItem">
-                <Map className="sidebarIcon" />
+                <PushPinIcon className="sidebarIcon" color="action" />
                 Collection Centers
               </li>
             </Link>
             <Link to="/CategoryList" className="link">
               <li className="sidebarListItem">
-                <Flag className="sidebarIcon" />
+              <FlagIcon className="sidebarIcon" color="action" />
                 Counties
               </li>
             </Link>
             <Link to="/CategoryList" className="link">
               <li className="sidebarListItem">
-                <GpsFixed className="sidebarIcon" />
+              <LocationCityIcon className="sidebarIcon" color="action" />
                 County Places
               </li>
             </Link>
@@ -100,19 +98,19 @@ export default function Sidebar() {
 
             <Link to="/users" className="link">
               <li className="sidebarListItem">
-                <LocalFlorist className="sidebarIcon" />
+              <CollectionsIcon className="sidebarIcon" color="action" />
                 Produce
               </li>
             </Link>
             <Link to="/users" className="link">
               <li className="sidebarListItem">
-                <Autorenew className="sidebarIcon" />
+              <TimelineIcon className="sidebarIcon" color="action" />
                 Progress
               </li>
             </Link>
             
             <li className="sidebarListItem">
-              <Assessment className="sidebarIcon" />
+            <AssessmentIcon className="sidebarIcon" color="action" />
               Reports
             </li>
           </ul>
@@ -121,7 +119,7 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Notifications</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
-              <Message className="sidebarIcon" />
+            <MessageIcon className="sidebarIcon" color="action" />
               Messages
             </li>
           </ul>

@@ -1,12 +1,13 @@
 import "../layout/list.css";
-import { Description,
-  Delete,
-  Edit,
-  Pageview, } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts } from "../../redux/apiCalls/productCalls";
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import EditIcon from '@mui/icons-material/Edit';
+import PreviewIcon from '@mui/icons-material/Preview';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function ProductList() {
   const dispatch = useDispatch();
@@ -54,21 +55,33 @@ export default function ProductList() {
               
               <div className="listShowInfo">
                 <Link to={"/ViewProduct/" + product._id}>
-                  <button className="listActionButton"><Pageview className="listShowIcon" /></button>
+                  <Tooltip title="View">
+                    <IconButton>
+                      <PreviewIcon color="success"/>
+                    </IconButton>
+                  </Tooltip>
                 </Link>
               </div>
 
               {user?.includes("ROLE_MODERATOR") && (
                 <div className="listShowInfo">
                   <Link to={"/EditProduct/" + product._id}>
-                    <button className="listActionButton"><Edit className="listShowIcon" /></button>
+                    <Tooltip title="Edit">
+                      <IconButton>
+                        <EditIcon color="success"/>
+                      </IconButton>
+                    </Tooltip>
                   </Link>
                 </div>
               )}
 
               {user?.includes("ROLE_ADMIN") && (
                 <div className="listShowInfo">
-                  <button className="listActionButton" onClick={() => handleDelete(product._id)}><Delete className="listShowIcon" /></button>
+                    <Tooltip title="Delete">
+                      <IconButton onClick={() => handleDelete(product._id)}>
+                        <DeleteIcon color="success"/>
+                      </IconButton>
+                    </Tooltip>
                 </div>
               )}
 

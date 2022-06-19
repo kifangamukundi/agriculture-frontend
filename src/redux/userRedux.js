@@ -30,8 +30,16 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
-    logout: (state) => {
+    signOutStart: (state) => {
+      state.isFetching = true;
+    },
+    signOutSuccess: (state) => {
+      state.isFetching = false;
       state.currentUser = null;
+    },
+    signOutFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
     },
   },
 });
@@ -42,6 +50,9 @@ export const { loginStart,
    signUpStart, 
    signUpSuccess, 
    signUpFailure,
+   signOutStart, 
+   signOutSuccess, 
+   signOutFailure,
    logout
 } = userSlice.actions;
 export default userSlice.reducer;
