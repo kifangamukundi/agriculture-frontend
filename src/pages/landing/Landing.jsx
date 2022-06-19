@@ -1,6 +1,10 @@
 import "./landing.css";
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux";
 export default function Landing() {
+
+  const isLoggedIn = useSelector((state) => state?.user?.currentUser);
+
 
   return (
     <div className="home">
@@ -13,9 +17,10 @@ export default function Landing() {
             <li className="landingItem">Home</li>
             <li className="landingItem">About</li>
             <li className="landingItem">Contact</li>
-            <Link to="/Login">
-              <li className="landingItem landingLogin">Login</li>
-            </Link>
+            {isLoggedIn
+              ? <Link to="/Dashboard"><li className="landingItem landingLogin">Dashboard</li></Link>
+              : <Link to="/Login"><li className="landingItem landingLogin">Login</li></Link>
+            }
           </ul>
         </nav>
       </header>
@@ -27,7 +32,10 @@ export default function Landing() {
             Keep track of your farming activities and thus enhance your strategy
             and realize high outputs and profits.
           </p>
-          <Link to="/Register"><button className="landingCTA">Start Today</button></Link>
+          {isLoggedIn
+              ? <Link to="/Dashboard"><li className="landingItem landingLogin">Dashboard</li></Link>
+              : <Link to="/Register"><button className="landingCTA">Start Today</button></Link>
+            }
         </div>
         <div className="landingRight">
             <img src="https://img.freepik.com/free-vector/happy-female-farmer-working-farm-feed-population-flat-vector-illustration-cartoon-farm-with-automation-technology_74855-8400.jpg?t=st=1655589590~exp=1655590190~hmac=16d6aad57d5523471bcddc87fa1452afacba06f85471dd171c20d8c22a51e161&w=900" className="landingHeroImg" />
