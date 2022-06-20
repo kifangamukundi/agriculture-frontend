@@ -5,9 +5,7 @@ import { loginFailure,
   signUpStart, 
   signUpSuccess,
   signUpFailure, 
-  signOutStart, 
-  signOutSuccess, 
-  signOutFailure } from "../userRedux";
+  logOutStart, } from "../userRedux";
 
 export const login = async (dispatch, user) => {
     dispatch(loginStart());
@@ -28,12 +26,14 @@ export const login = async (dispatch, user) => {
       dispatch(signUpFailure());
     }
   };
-  export const signOut = async (dispatch, user) => {
-    dispatch(signOutStart());
-    try {
-      const res = await localStorage.removeItem("user");
-      dispatch(signOutSuccess(res.data));
-    } catch (err) {
-      dispatch(signOutFailure());
-    }
+
+  export const logout = async (dispatch) => {
+    console.log("I was called")
+    dispatch(logOutStart());
+    // try {
+    //   const res = await publicRequest.post("/auth/signin", user);
+    //   dispatch(loginSuccess(res.data));
+    // } catch (err) {
+    //   dispatch(loginFailure());
+    // }
   };
