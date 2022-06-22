@@ -41,7 +41,7 @@ export default function Product() {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     updateProduct(productId, state, dispatch);
-    navigate("/");
+    navigate("/Dashboard");
   }
 
   return (

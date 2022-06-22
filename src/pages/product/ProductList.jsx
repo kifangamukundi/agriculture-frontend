@@ -26,9 +26,13 @@ export default function ProductList() {
     <div className="list">
       <div className="listTitleContainer">
         <h1 className="listTitle">Products List</h1>
+
+        {(user?.includes("ROLE_MODERATOR") || user?.includes("ROLE_ADMIN")) && (
         <Link to="/NewProduct">
           <button className="listAddButton">Create</button>
         </Link>
+        )}
+
       </div>
       <div className="listContainer">
         <div className="listShow">
@@ -63,7 +67,7 @@ export default function ProductList() {
                 </Link>
               </div>
 
-              {user?.includes("ROLE_MODERATOR") && (
+              {(user?.includes("ROLE_MODERATOR") || user?.includes("ROLE_ADMIN")) && (
                 <div className="listShowInfo">
                   <Link to={"/EditProduct/" + product._id}>
                     <Tooltip title="Edit">

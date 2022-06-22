@@ -14,8 +14,12 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import MessageIcon from '@mui/icons-material/Message';
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Fragment } from "react";
 
 export default function Sidebar() {
+  const user = useSelector((state) => state?.user?.currentUser?.roles);
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -31,6 +35,8 @@ export default function Sidebar() {
             </Link>
           </ul>
         </div>
+
+        {user?.includes("ROLE_ADMIN") && (
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Admin Actions</h3>
           <ul className="sidebarList">
@@ -50,6 +56,8 @@ export default function Sidebar() {
             </li>
           </ul>
         </div>
+        )}
+
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">
@@ -66,34 +74,41 @@ export default function Sidebar() {
                 Categories
               </li>
             </Link>
-            <Link to="/CategoryList" className="link">
-              <li className="sidebarListItem">
-                <LocationOnIcon className="sidebarIcon" color="action" />
-                Collection Locations
-              </li>
-            </Link>
-            <Link to="/CategoryList" className="link">
-              <li className="sidebarListItem">
-                <PushPinIcon className="sidebarIcon" color="action" />
-                Collection Centers
-              </li>
-            </Link>
-            <Link to="/CategoryList" className="link">
-              <li className="sidebarListItem">
-              <FlagIcon className="sidebarIcon" color="action" />
-                Counties
-              </li>
-            </Link>
-            <Link to="/CategoryList" className="link">
-              <li className="sidebarListItem">
-              <LocationCityIcon className="sidebarIcon" color="action" />
-                County Places
-              </li>
-            </Link>
+
+            {(user?.includes("ROLE_MODERATOR") || user?.includes("ROLE_ADMIN")) && (
+            <Fragment>
+              <Link to="/CategoryList" className="link">
+                <li className="sidebarListItem">
+                  <LocationOnIcon className="sidebarIcon" color="action" />
+                  Collection Locations
+                </li>
+              </Link>
+              <Link to="/CategoryList" className="link">
+                <li className="sidebarListItem">
+                  <PushPinIcon className="sidebarIcon" color="action" />
+                  Collection Centers
+                </li>
+              </Link>
+              <Link to="/CategoryList" className="link">
+                <li className="sidebarListItem">
+                <FlagIcon className="sidebarIcon" color="action" />
+                  Counties
+                </li>
+              </Link>
+              <Link to="/CategoryList" className="link">
+                <li className="sidebarListItem">
+                <LocationCityIcon className="sidebarIcon" color="action" />
+                  County Places
+                </li>
+              </Link>
+            </Fragment>
+            )}
           </ul>
         </div>
+
+        {user?.includes("ROLE_FARMER") && (
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">User Actions</h3>
+          <h3 className="sidebarTitle">Farmer Actions</h3>
           <ul className="sidebarList">
 
             <Link to="/users" className="link">
@@ -115,6 +130,8 @@ export default function Sidebar() {
             </li>
           </ul>
         </div>
+        )}
+
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Notifications</h3>
           <ul className="sidebarList">
