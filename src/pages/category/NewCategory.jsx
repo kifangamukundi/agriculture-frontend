@@ -7,7 +7,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
-import { addCategory } from "../../redux/apiCalls/categoryCalls";
+// import { addCategory } from "../../redux/apiCalls/categoryCalls";
 import { useDispatch } from "react-redux";
 
 export default function NewCategory() {

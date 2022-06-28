@@ -1,57 +1,40 @@
 .newItem {
-    flex: 4;
-  }
-  
-  .newItemForm {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .newItemItem {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    margin-right: 20px;
-  }
-  
-  .newItemItem > label {
-    margin-bottom: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: rgb(151, 150, 150);
-  }
-  
-  .newItemItem > input {
-    height: 20px;
-    padding: 10px;
-    border: 1px solid gray;
-    border-radius: 5px;
-  }
-  
-  .newItemGender > input {
-    margin-top: 15px;
-  }
-  
-  .newItemGender>label{
-      margin: 10px;
-      font-size: 18px;
-      color: #555;
-  }
-  
-  .newItemSelect{
-      height: 40px;
-      border-radius: 5px;
-  }
-  
-  .newItemButton{
-      width: 200px;
-      border: none;
-      background-color: darkblue;
-      color: white;
-      padding: 7px 10px;
-      font-weight: 600;
-      border-radius: 10px;
-      margin-top: 30px;
-      cursor: pointer;
-  }
+  flex: 4;
+  margin-left: 100px;
+}
+
+.addItemForm {
+  margin-top: 10px;
+}
+
+.addItemItem {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.addItemItem > label {
+  color: gray;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.addItemItem > input {
+  padding: 10px;
+}
+
+.addItemItem > select {
+  padding: 10px;
+}
+
+.addItemButton {
+  margin-top: 10px;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: darkblue;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}

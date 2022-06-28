@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/apiCalls/userCalls";
+import { useDispatch, useSelector  } from "react-redux";
+import { loginUser, getUserError, getUserStatus } from '../../redux/userSlice';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Login = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const userStatus = useSelector(getUserStatus);
+  const userError = useSelector(getUserError);
   // New feature
   const [values, setValues] = useState({
     username: "",
@@ -38,19 +42,27 @@ const Login = () => {
     },
   ];
 
-
   const handleClick = (e) => {
     e.preventDefault();
-    login(dispatch, { ...values });
-    navigate("/");
+    dispatch(loginUser({ ...values }))
+    .then(data => {
+      // do something with data
+      console.log("I was called")
+      navigate("/")
+    })
+    .catch(error => {
+     // do something with error
+     console.log("I was called")
+     navigate("/Login")
+    })
+    .finally(() => {
+      console.log("finally called")
+    })
   };
-
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-
-  console.log(values)
 
   return (
     <div className="auth">
@@ -64,7 +76,8 @@ const Login = () => {
             onChange={onChange}
           />
         ))}
-        <button className="authButton">Submit</button>
+        {userStatus === 'loading' ? <CircularProgress /> : <button className="authButton">Submit</button>}
+        {userStatus === 'failed' && <div className="error">{userError}</div>}
         <label className="authLabel">Don't have an account? <Link to="/Register">Register</Link></label>
       </form>
     </div>

@@ -1,25 +1,58 @@
 import "../layout/list.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate , useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, getProducts } from "../../redux/apiCalls/productCalls";
+import { useDispatch } from "react-redux";
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
 import PreviewIcon from '@mui/icons-material/Preview';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
+
+import { useSelector } from "react-redux";
+import { fetchPosts, deletePost, selectPostById, getPostsStatus, getPostsError } from "../../redux/postsSlice";
+
 export default function ProductList() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products.products);
-  const user = useSelector((state) => state?.user?.currentUser?.roles);
+  const location = useLocation();
+  let navigate = useNavigate ();
+  const { postId } = useParams()
+  const post = useSelector((state) => selectPostById(state, Number(postId)))
+  const posts = useSelector((state) => state?.posts?.posts?.products);
+  const user = useSelector((state) => state?.user?.roles);
+
+  // Status and error from the API call
+  const postStatus = useSelector(getPostsStatus);
+  const postError = useSelector(getPostsError);
+
 
   useEffect(() => {
-    getProducts(dispatch);
-  }, [dispatch]);
+    if (postStatus === 'idle') {
+      dispatch(fetchPosts())
+      console.log("I was called when i was idle")
+    }
+  }, [postStatus, dispatch])
 
   const handleDelete = (id) => {
-    deleteProduct(id, dispatch);
+    dispatch(deletePost({ id })).unwrap()
+    .then(data => {
+      dispatch(fetchPosts())
+      console.log(data)
+      navigate("/ProductList")
+    })
+    .catch(error => {
+     console.log(error)
+     navigate("/Login")
+    })
+    .finally(() => {
+      console.log("finally called")
+    })
   };
 
   return (
@@ -34,10 +67,21 @@ export default function ProductList() {
         )}
 
       </div>
+      {postStatus === 'loading' && <Box sx={{ width: '100%' }}><LinearProgress color="success" /></Box>}
+
+      {(postStatus === 'succeeded' && !posts?.length) && (
+        <Stack sx={{ width: '100%' }} spacing={2}>
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            No Products — <strong>Found!</strong>
+          </Alert>
+        </Stack>
+      )}
+
       <div className="listContainer">
         <div className="listShow">
 
-        {products && products.length ? products.map(product => (
+        {posts && posts.length ? posts.map(product => (
           <div className="listShowBottom" key={product._id}>
 
             <div className="listUpdateRight">
@@ -79,7 +123,7 @@ export default function ProductList() {
                 </div>
               )}
 
-              {user?.includes("ROLE_ADMIN") && (
+              {(user?.includes("ROLE_MODERATOR") || user?.includes("ROLE_ADMIN")) && (
                 <div className="listShowInfo">
                     <Tooltip title="Delete">
                       <IconButton onClick={() => handleDelete(product._id)}>

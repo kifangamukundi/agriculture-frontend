@@ -2,7 +2,7 @@ import { useState } from "react";
 import FormInput from "./FormInput";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { signUp } from "../../redux/apiCalls/userCalls";
+// import { signUp } from "../../redux/apiCalls/userCalls";
 
 const Register = () => {
   let navigate = useNavigate();

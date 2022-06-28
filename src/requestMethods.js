@@ -4,7 +4,7 @@ const BASE_URL = "http://localhost:8080/api/";
 let TOKEN = ""
 
 if ("persist:root" in localStorage) {
-  TOKEN = JSON.parse(JSON.parse(localStorage?.getItem("persist:root"))?.user)?.currentUser?.accessToken;
+  TOKEN = JSON.parse(JSON.parse(localStorage?.getItem("persist:root"))?.user)?.accessToken;
 } else {
   TOKEN = {}
 }

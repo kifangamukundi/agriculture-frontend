@@ -1,13 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import userReducer from "./userRedux";
-import productReducer from "./productRedux";
-import categoryReducer from "./categoryRedux";
-import produceReducer from "./produceRedux";
-import progressReducer from "./progressRedux";
-import collectionCenterReducer from "./collectionCenterRedux";
-import collectionLocationReducer from "./collectionLocationRedux";
-import countyReducer from "./countyRedux";
-import countyPlaceReducer from "./countyPlaceRedux";
+import userReducer from './userSlice';
+import postsReducer from './postsSlice';
 import {
   persistStore,
   persistReducer,
@@ -28,14 +21,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
-  product: productReducer,
-  category: categoryReducer,
-  produce: produceReducer,
-  progress: progressReducer,
-  collectionCenter: collectionCenterReducer,
-  collectionLocation: collectionLocationReducer,
-  county: countyReducer,
-  countyPlace: countyPlaceReducer,
+  posts: postsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

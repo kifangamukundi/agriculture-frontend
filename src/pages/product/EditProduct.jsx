@@ -3,12 +3,28 @@ import { Link, useNavigate , useLocation } from "react-router-dom";
 import { Description, Title, List, Publish } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { updateProduct, getProducts } from "../../redux/apiCalls/productCalls";
+import { fetchPosts, updatePost, getPostsStatus, getPostsError } from "../../redux/postsSlice";
+
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
+
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
 
 export default function Product() {
   let dispatch = useDispatch();
   let navigate = useNavigate ();
   const location = useLocation();
+
+  // Status and error from the API call
+  const postStatus = useSelector(getPostsStatus);
+  const postError = useSelector(getPostsError);
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState([]);
 
   const [state, setState] = useState({
     title: '',
@@ -16,32 +32,41 @@ export default function Product() {
     categories: []
   }
   );
-  const productId = location.pathname.split("/")[2];
-  const product = useSelector((state) =>
-    state.product.products.products.find((product) => product._id === productId)
+
+  const postId = location.pathname.split("/")[2];
+
+  const post = useSelector((state) =>
+    state.posts.posts.products.find((product) => product._id === postId)
   );
 
   useEffect(() => {
-    getProducts(dispatch);
-  }, []);
-
-  useEffect(() => {
-    if (product) {
-        setState({ ...product });
+    if (post) {
+        setState({ ...post });
     }
-  }, [product]);
+  }, [post]);
 
   const { title, description } = state;
 
   const handleTextChange = e => {
     let { name, value } = e.target;
     setState({ ...state, [name]: value });
-    console.log(state);
   }
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    updateProduct(productId, state, dispatch);
-    navigate("/Dashboard");
+    setLoading(true);
+    dispatch(updatePost({ id: post._id, ...state })).unwrap()
+    .then((originalPromiseResult) => {
+      // handle result here
+      console.log(originalPromiseResult)
+      dispatch(fetchPosts());
+      navigate("/ProductList");
+    })
+    .catch((rejectedValueOrSerializedError) => {
+      // handle error here
+      console.log(rejectedValueOrSerializedError)
+      setApiError(rejectedValueOrSerializedError)
+      setLoading(false)
+    })
   }
 
   return (
@@ -52,21 +77,32 @@ export default function Product() {
           <button className="editAddButton">All</button>
         </Link>
       </div>
+      {postStatus === 'loading' && <Box sx={{ width: '100%' }}><LinearProgress color="secondary" /></Box>}
+
+      {(postStatus === 'failed') && (
+        <Stack sx={{ width: '100%' }} spacing={2}>
+           <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              Error — <strong>{apiError.message}!</strong>
+            </Alert>
+        </Stack>
+      )}
+
       <div className="editContainer">
         <div className="editShow">
           <div className="editShowBottom">
             <span className="editShowTitle">Product Details</span>
             <div className="editShowInfo">
               <Title className="editShowIcon" />
-              <span className="editShowInfoTitle">{product.title}</span>
+              <span className="editShowInfoTitle">{post.title}</span>
             </div>
             <div className="editShowInfo">
               <Description className="editShowIcon" />
-              <span className="editShowInfoTitle">{product.description}</span>
+              <span className="editShowInfoTitle">{post.description}</span>
             </div>
             <span className="editShowTitle">Category List</span>
 
-            {product.categories.map(category => (
+            {post.categories.map(category => (
             <div className="editShowInfo">
               <List className="editShowIcon" />
               <span className="editShowInfoTitle" key={category._id}>{category.title}</span>
@@ -103,7 +139,7 @@ export default function Product() {
               <div className="editUpdateUpload">
                 <img
                   className="editUpdateImg"
-                  src={product.productImage}
+                  src={post.productImage}
                   alt=""
                 />
                 <label htmlFor="file">
@@ -111,7 +147,15 @@ export default function Product() {
                 </label>
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
-              <button className="editUpdateButton" onChange={handleTextChange}>Update</button>
+              <LoadingButton
+                size="small"
+                onClick={handleOnSubmit}
+                loading={loading}
+                loadingPosition="start"
+                startIcon={<SaveIcon />}
+                variant="contained">
+                Save
+              </LoadingButton>
             </div>
           </form>
         </div>

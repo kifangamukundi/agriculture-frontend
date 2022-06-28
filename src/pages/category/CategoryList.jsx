@@ -6,7 +6,7 @@ import { Description,
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCategory, getCategories } from "../../redux/apiCalls/categoryCalls";
+// import { deleteCategory, getCategories } from "../../redux/apiCalls/categoryCalls";
 
 export default function CategoryList() {
   const dispatch = useDispatch();
