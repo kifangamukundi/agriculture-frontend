@@ -2,19 +2,19 @@ import "../layout/view.css";
 import { Link, useLocation } from "react-router-dom";
 import { DoneOutline, Title, List } from "@material-ui/icons";
 import { useSelector } from "react-redux";
-import { selectAllPosts, getPostsStatus, getPostsError } from "../../redux/postsSlice";
+import { selectAllProducts, getProductsStatus, getProductsError } from "../../redux/productSlice";
 
 export default function ViewProduct() {
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
 
   const product = useSelector((state) =>
-    state.posts.posts.products.find((product) => product._id === productId)
+    state.products.products.products.find((product) => product._id === productId)
   );
 
-  const post = useSelector(selectAllPosts).products.find(product => product._id === productId);
-  const postStatus = useSelector(getPostsStatus);
-  const error = useSelector(getPostsError);
+  const products = useSelector(selectAllProducts).products.find(product => product._id === productId);
+  const productStatus = useSelector(getProductsStatus);
+  const productError = useSelector(getProductsError);
 
   return (
     <div className="view">
@@ -30,15 +30,15 @@ export default function ViewProduct() {
             <span className="viewShowTitle">Product Details</span>
             <div className="viewShowInfo">
               <DoneOutline className="viewShowIcon" />
-              <span className="viewShowInfoTitle">{post._id}</span>
+              <span className="viewShowInfoTitle">{product._id}</span>
             </div>
             <div className="viewShowInfo">
               <Title className="viewShowIcon" />
-              <span className="viewShowInfoTitle">{post.title}</span>
+              <span className="viewShowInfoTitle">{product.title}</span>
             </div>
             <span className="viewShowTitle">Product Categories</span>
 
-            {post.categories.map(category => (
+            {product.categories.map(category => (
             <div className="viewShowInfo">
               <List className="viewShowIcon" />
               <span className="viewShowInfoTitle" key={category._id}>{category.title}</span>
@@ -53,12 +53,12 @@ export default function ViewProduct() {
 
               <div className="viewUpdateItem">
                 <label>Description</label>
-                <span className="viewShowInfoTitle">{post.description}</span>
+                <span className="viewShowInfoTitle">{product.description}</span>
               </div>
 
               <div className="viewUpdateItem">
                 <label>Description</label>
-                <span className="viewShowInfoTitle">{post.description}</span>
+                <span className="viewShowInfoTitle">{product.description}</span>
               </div>
             
             </div>
@@ -66,7 +66,7 @@ export default function ViewProduct() {
               <div className="viewUpdateUpload">
                     <img
                     className="viewUpdateImg"
-                    src={post.productImage}
+                    src={product.productImage}
                     alt=""
                     />
               </div>

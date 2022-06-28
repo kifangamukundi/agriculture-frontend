@@ -16,42 +16,39 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 
 import { useSelector } from "react-redux";
-import { fetchPosts, deletePost, selectPostById, getPostsStatus, getPostsError } from "../../redux/postsSlice";
+import { fetchProducts, deleteProduct, selectProductById, getProductsStatus, getProductsError } from "../../redux/productSlice";
 
 export default function ProductList() {
   const dispatch = useDispatch();
   const location = useLocation();
   let navigate = useNavigate ();
-  const { postId } = useParams()
-  const post = useSelector((state) => selectPostById(state, Number(postId)))
-  const posts = useSelector((state) => state?.posts?.posts?.products);
+  const { productId } = useParams();
+  const product = useSelector((state) => selectProductById(state, Number(productId)))
+  const products = useSelector((state) => state?.products?.products?.products);
   const user = useSelector((state) => state?.user?.roles);
 
   // Status and error from the API call
-  const postStatus = useSelector(getPostsStatus);
-  const postError = useSelector(getPostsError);
+  const productStatus = useSelector(getProductsStatus);
+  const productError = useSelector(getProductsError);
 
 
   useEffect(() => {
-    if (postStatus === 'idle') {
-      dispatch(fetchPosts())
-      console.log("I was called when i was idle")
+    if (productStatus === 'idle') {
+      dispatch(fetchProducts())
     }
-  }, [postStatus, dispatch])
+  }, [productStatus, dispatch])
 
   const handleDelete = (id) => {
-    dispatch(deletePost({ id })).unwrap()
-    .then(data => {
-      dispatch(fetchPosts())
-      console.log(data)
-      navigate("/ProductList")
+    dispatch(deleteProduct({ id })).unwrap()
+    .then((originalPromiseResult) => {
+      // handle result here
+      console.log(originalPromiseResult)
+      dispatch(fetchProducts());
+      navigate("/ProductList");
     })
-    .catch(error => {
-     console.log(error)
-     navigate("/Login")
-    })
-    .finally(() => {
-      console.log("finally called")
+    .catch((rejectedValueOrSerializedError) => {
+      // handle error here
+      console.log(rejectedValueOrSerializedError);
     })
   };
 
@@ -67,9 +64,9 @@ export default function ProductList() {
         )}
 
       </div>
-      {postStatus === 'loading' && <Box sx={{ width: '100%' }}><LinearProgress color="success" /></Box>}
+      {productStatus === 'loading' && <Box sx={{ width: '100%' }}><LinearProgress color="success" /></Box>}
 
-      {(postStatus === 'succeeded' && !posts?.length) && (
+      {(productStatus === 'succeeded' && !products?.length) && (
         <Stack sx={{ width: '100%' }} spacing={2}>
           <Alert severity="error">
             <AlertTitle>Error</AlertTitle>
@@ -81,7 +78,7 @@ export default function ProductList() {
       <div className="listContainer">
         <div className="listShow">
 
-        {posts && posts.length ? posts.map(product => (
+        {products && products.length ? products.map(product => (
           <div className="listShowBottom" key={product._id}>
 
             <div className="listUpdateRight">

@@ -6,6 +6,11 @@ import WidgetLg from "../../components/widgetLg/WidgetLg";
 import { useEffect, useMemo, useState } from "react";
 import { userRequest } from "../../requestMethods";
 
+// Fetching All Products when dashboard is loaded
+import { store } from "../../redux/store";
+import { fetchProducts } from './../../redux/productSlice';
+store.dispatch(fetchProducts());
+
 export default function Home() {
   const [userStats, setUserStats] = useState([]);
 

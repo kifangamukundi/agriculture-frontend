@@ -3,7 +3,7 @@ import { Link, useNavigate , useLocation } from "react-router-dom";
 import { Description, Title, List, Publish } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchPosts, updatePost, getPostsStatus, getPostsError } from "../../redux/postsSlice";
+import { fetchProducts, updateProduct, getProductsStatus, getProductsError } from "../../redux/productSlice";
 
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -21,8 +21,8 @@ export default function Product() {
   const location = useLocation();
 
   // Status and error from the API call
-  const postStatus = useSelector(getPostsStatus);
-  const postError = useSelector(getPostsError);
+  const productStatus = useSelector(getProductsStatus);
+  const productError = useSelector(getProductsError);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState([]);
 
@@ -33,17 +33,17 @@ export default function Product() {
   }
   );
 
-  const postId = location.pathname.split("/")[2];
+  const productId = location.pathname.split("/")[2];
 
-  const post = useSelector((state) =>
-    state.posts.posts.products.find((product) => product._id === postId)
+  const product = useSelector((state) =>
+    state.products.products.products.find((product) => product._id === productId)
   );
 
   useEffect(() => {
-    if (post) {
-        setState({ ...post });
+    if (product) {
+        setState({ ...product });
     }
-  }, [post]);
+  }, [product]);
 
   const { title, description } = state;
 
@@ -54,11 +54,11 @@ export default function Product() {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(updatePost({ id: post._id, ...state })).unwrap()
+    dispatch(updateProduct({ id: product._id, ...state })).unwrap()
     .then((originalPromiseResult) => {
       // handle result here
       console.log(originalPromiseResult)
-      dispatch(fetchPosts());
+      dispatch(fetchProducts());
       navigate("/ProductList");
     })
     .catch((rejectedValueOrSerializedError) => {
@@ -77,9 +77,9 @@ export default function Product() {
           <button className="editAddButton">All</button>
         </Link>
       </div>
-      {postStatus === 'loading' && <Box sx={{ width: '100%' }}><LinearProgress color="secondary" /></Box>}
+      {productStatus === 'loading' && <Box sx={{ width: '100%' }}><LinearProgress color="secondary" /></Box>}
 
-      {(postStatus === 'failed') && (
+      {(productStatus === 'failed') && (
         <Stack sx={{ width: '100%' }} spacing={2}>
            <Alert severity="error">
               <AlertTitle>Error</AlertTitle>
@@ -94,15 +94,15 @@ export default function Product() {
             <span className="editShowTitle">Product Details</span>
             <div className="editShowInfo">
               <Title className="editShowIcon" />
-              <span className="editShowInfoTitle">{post.title}</span>
+              <span className="editShowInfoTitle">{product.title}</span>
             </div>
             <div className="editShowInfo">
               <Description className="editShowIcon" />
-              <span className="editShowInfoTitle">{post.description}</span>
+              <span className="editShowInfoTitle">{product.description}</span>
             </div>
             <span className="editShowTitle">Category List</span>
 
-            {post.categories.map(category => (
+            {product.categories.map(category => (
             <div className="editShowInfo">
               <List className="editShowIcon" />
               <span className="editShowInfoTitle" key={category._id}>{category.title}</span>
@@ -139,7 +139,7 @@ export default function Product() {
               <div className="editUpdateUpload">
                 <img
                   className="editUpdateImg"
-                  src={post.productImage}
+                  src={product.productImage}
                   alt=""
                 />
                 <label htmlFor="file">

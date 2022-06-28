@@ -8,7 +8,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
-import { addNewPost, fetchPosts, getPostsStatus, getPostsError } from "../../redux/postsSlice";
+import { addNewProduct, fetchProducts, getProductsStatus, getProductsError } from "../../redux/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Box from '@mui/material/Box';
@@ -28,8 +28,8 @@ export default function NewProduct() {
 
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
-  const postStatus = useSelector(getPostsStatus);
-  const postError = useSelector(getPostsError);
+  const productStatus = useSelector(getProductsStatus);
+  const productError = useSelector(getProductsError);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState([]);
 
@@ -70,11 +70,11 @@ export default function NewProduct() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const product = { ...inputs, productImage: downloadURL };
-          dispatch(addNewPost(product)).unwrap()
+          dispatch(addNewProduct(product)).unwrap()
           .then((originalPromiseResult) => {
             // handle result here
             console.log(originalPromiseResult)
-            dispatch(fetchPosts());
+            dispatch(fetchProducts());
             navigate("/ProductList");
           })
           .catch((rejectedValueOrSerializedError) => {
@@ -91,9 +91,9 @@ export default function NewProduct() {
   return (
     <div className="newItem">
       <h1 className="addItemTitle">New Product</h1>
-      {postStatus === 'loading' && <Box sx={{ width: '100%' }}><LinearProgress color="secondary" /></Box>}
+      {productStatus === 'loading' && <Box sx={{ width: '100%' }}><LinearProgress color="secondary" /></Box>}
 
-      {(postStatus === 'failed') && (
+      {(productStatus === 'failed') && (
         <Stack sx={{ width: '100%' }} spacing={2}>
           <Alert severity="warning">
             <AlertTitle>Warning</AlertTitle>
