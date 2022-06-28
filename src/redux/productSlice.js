@@ -9,7 +9,7 @@ const initialState = {
 }
 
 // Fetch products from the API
-export const fetchProducts = createAsyncThunk('products/fetchproducts', async (_, thunkAPI) => {
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
         const response = await publicRequest.get("/product/all")
@@ -20,7 +20,7 @@ export const fetchProducts = createAsyncThunk('products/fetchproducts', async (_
     }
 })
 
-// Add a new post to the API
+// Add a new product to the API
 export const addNewProduct = createAsyncThunk('products/addNewProduct', async (initialProduct, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
@@ -32,7 +32,7 @@ export const addNewProduct = createAsyncThunk('products/addNewProduct', async (i
     }
 })
 
-// Update a post in the API
+// Update a product in the API
 export const updateProduct = createAsyncThunk('products/updateProduct', async (initialProduct, thunkAPI) => {
     const { id } = initialProduct;
     const { rejectWithValue } = thunkAPI
@@ -46,7 +46,7 @@ export const updateProduct = createAsyncThunk('products/updateProduct', async (i
     }
 })
 
-// Delete a post from the API
+// Delete a product from the API
 export const deleteProduct = createAsyncThunk('products/deletePost', async (initialProduct, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     const { id } = initialProduct;
@@ -92,7 +92,6 @@ const productsSlice = createSlice({
             })
             .addCase(addNewProduct.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                action.payload.id = state?.products?.products?.products[state?.products?.products?.products?.length - 1].id + 1;
                 console.log(action?.payload?.createdProduct?._id)
                 console.log(action.payload.createdProduct)
                 state?.products?.products?.products?.push(action?.payload?.createdProduct)
@@ -123,7 +122,7 @@ const productsSlice = createSlice({
                 state.error = action.error.message
             })
 
-            // Delete post actions
+            // Delete product actions
             .addCase(deleteProduct.pending, (state, action) => {
                 state.status = 'loading'
             })
@@ -134,7 +133,7 @@ const productsSlice = createSlice({
                     return;
                 }
                 const { id } = action.payload;
-                const products = state?.products?.products?.products?.filter(post => post.id !== id);
+                const products = state?.products?.products?.products?.filter(product => product.id !== id);
                 state.products = products;
             })
             .addCase(deleteProduct.rejected, (state, action) => {
