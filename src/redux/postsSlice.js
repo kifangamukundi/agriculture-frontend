@@ -1,8 +1,6 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 import { publicRequest, userRequest } from "../requestMethods";
 
-const POSTS_URL = 'http://localhost:8080/api/product';
-
 // Initial state comprising of { "idle", "loading", "succeeded", "failed" }
 const initialState = {
     posts: [],
@@ -14,7 +12,7 @@ const initialState = {
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const response = await publicRequest.get(`${POSTS_URL}/all`)
+        const response = await publicRequest.get("/product/all")
         return response.data
     } catch (error) {
         console.log(error.response.data);
@@ -26,7 +24,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, thunkAP
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const response = await userRequest.post(POSTS_URL, initialPost)
+        const response = await userRequest.post("/product", initialPost)
         return response.data
     } catch (error) {
         console.log(error.response.data);
@@ -39,7 +37,7 @@ export const updatePost = createAsyncThunk('posts/updatePost', async (initialPos
     const { id } = initialPost;
     const { rejectWithValue } = thunkAPI
     try {
-        const response = await userRequest.patch(`${POSTS_URL}/${id}`, initialPost)
+        const response = await userRequest.patch(`/product/${id}`, initialPost)
         return response.data
     } catch (error) {
         console.log(error.response.data);
@@ -53,7 +51,7 @@ export const deletePost = createAsyncThunk('posts/deletePost', async (initialPos
     const { rejectWithValue } = thunkAPI
     const { id } = initialPost;
     try {
-        const response = await userRequest.delete(`${POSTS_URL}/${id}`)
+        const response = await userRequest.delete(`/product/${id}`)
         if (response?.status === 200) return initialPost;
         return `${response?.status}: ${response?.statusText}`;
     } catch (error) {
