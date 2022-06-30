@@ -35,8 +35,7 @@ export const loginUser = createAsyncThunk('users/loginUser', async (initialUser,
 export const logOutUser = createAsyncThunk('users/logOutUser', async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const response = await localStorage.clear("persist:root");
-        console.log(localStorage.getItem("persist:root"));
+        const response = await localStorage.clear('persist:root');
     } catch (error) {
         console.log(error);
         return rejectWithValue(error)
