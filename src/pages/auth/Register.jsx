@@ -1,12 +1,20 @@
 import { useState } from "react";
 import FormInput from "./FormInput";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-// import { signUp } from "../../redux/apiCalls/userCalls";
+import { addNewUser, getUsersStatus, getUsersError } from '../../redux/userSlice';
+
+import LoadingButton from '@mui/lab/LoadingButton';
+import LoginIcon from '@mui/icons-material/Login';
+import Divider from '@mui/material/Divider';
 
 const Register = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const userStatus = useSelector(getUsersStatus);
+  const userError = useSelector(getUsersError);
+
   const [values, setValues] = useState({
     firstName: "",
     lastName: "",
@@ -14,6 +22,9 @@ const Register = () => {
     username: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState([]);
 
   const inputs = [
     {
@@ -66,27 +77,42 @@ const Register = () => {
       errorMessage:
         "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",
       label: "Password",
-      pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+      // pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
       required: true,
     },
   ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signUp(dispatch, { ...values });
-    navigate("/login");
+    setLoading(true);
+    dispatch(addNewUser({ ...values })).unwrap()
+    .then((originalPromiseResult) => {
+      // handle result here
+      console.log(originalPromiseResult)
+      navigate("/Login");
+    })
+    .catch((rejectedValueOrSerializedError) => {
+      // handle error here
+      console.log(rejectedValueOrSerializedError)
+      setApiError(rejectedValueOrSerializedError)
+      setLoading(false)
+    })
   };
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  console.log(values)
 
   return (
     <div className="auth">
-      <form onSubmit={handleSubmit}>
+      <form>
         <h1 className="authH1">Register</h1>
+
+        {(userStatus === 'failed') && (
+          <h2 className="authH2">({userError}) {apiError.message}!</h2>
+        )}
+
         {inputs.map((input) => (
           <FormInput
             key={input.id}
@@ -95,8 +121,19 @@ const Register = () => {
             onChange={onChange}
           />
         ))}
-        <button className="authButton">Submit</button>
+
+        <LoadingButton
+        size="small"
+        color="success"
+        onClick={handleSubmit}
+        loading={loading}
+        loadingPosition="start"
+        startIcon={<LoginIcon />}
+        variant="contained">
+        Register
+        </LoadingButton>
         <label className="authLabel">Have an account? <Link to="/Login">Login</Link></label>
+        <Divider />
       </form>
     </div>
   );

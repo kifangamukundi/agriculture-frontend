@@ -76,9 +76,11 @@ const productsSlice = createSlice({
             // Fetch products actions
             .addCase(fetchProducts.pending, (state, action) => {
                 state.status = 'loading'
+                state.error = null
             })
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 state.status = 'succeeded'
+                state.error = null
                 state.products = action.payload
             })
             .addCase(fetchProducts.rejected, (state, action) => {
@@ -89,9 +91,11 @@ const productsSlice = createSlice({
             // Add new product actions
             .addCase(addNewProduct.pending, (state, action) => {
                 state.status = 'loading'
+                state.error = null
             })
             .addCase(addNewProduct.fulfilled, (state, action) => {
                 state.status = 'succeeded'
+                state.error = null
                 console.log(action?.payload?.createdProduct?._id)
                 console.log(action.payload.createdProduct)
                 state?.products?.products?.products?.push(action?.payload?.createdProduct)
@@ -104,9 +108,11 @@ const productsSlice = createSlice({
             // Update product actions
             .addCase(updateProduct.pending, (state, action) => {
                 state.status = 'loading'
+                state.error = null
             })
             .addCase(updateProduct.fulfilled, (state, action) => {
                 state.status = 'succeeded'
+                state.error = null
                 if (!action.payload?.id) {
                     console.log('Update could not complete')
                     console.log(action.payload)
@@ -125,8 +131,11 @@ const productsSlice = createSlice({
             // Delete product actions
             .addCase(deleteProduct.pending, (state, action) => {
                 state.status = 'loading'
+                state.error = null
             })
             .addCase(deleteProduct.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.error = null
                 if (!action.payload?.id) {
                     console.log('Delete could not complete')
                     console.log(action.payload)

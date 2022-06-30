@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux";
 export default function Landing() {
 
-  const isLoggedIn = useSelector((state) => state?.user?.accessToken);
+  const isLoggedIn = useSelector((state) => state?.users?.currentUser?.accessToken);
 
 
   return (

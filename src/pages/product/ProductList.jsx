@@ -25,7 +25,7 @@ export default function ProductList() {
   const { productId } = useParams();
   const product = useSelector((state) => selectProductById(state, Number(productId)))
   const products = useSelector((state) => state?.products?.products?.products);
-  const user = useSelector((state) => state?.user?.roles);
+  const user = useSelector((state) => state?.users?.currentUser?.roles);
 
   // Status and error from the API call
   const productStatus = useSelector(getProductsStatus);

@@ -5,18 +5,25 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import "./topbar.css";
 import { useDispatch, useSelector } from "react-redux";
-// import { logout } from "../../redux/apiCalls/userCalls";
+import { logOutUser } from "../../redux/userSlice";
 
 export default function Topbar() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state?.user?.accessToken);
+  const user = useSelector((state) => state?.users?.currentUser?.accessToken);
 
-  // const handleSignOut = () => {
-  //   console.log("I was Called on click")
-  //   logout(dispatch);
-  //   navigate("/Login");
-  // };
+  const handleSignOut = () => {
+    dispatch(logOutUser())
+    .then((originalPromiseResult) => {
+      // handle result here
+      console.log(originalPromiseResult)
+      navigate("/Login");
+    })
+    .catch((rejectedValueOrSerializedError) => {
+      // handle error here
+      console.log(rejectedValueOrSerializedError);
+    })
+  };
 
   return (
     <div className="topbar">
@@ -28,7 +35,7 @@ export default function Topbar() {
 
           <div className="topbarIconContainer">
             <Tooltip title="Logout">
-              <IconButton>
+              <IconButton onClick={handleSignOut}>
                 <LogoutIcon color="action"/>
               </IconButton>
             </Tooltip>

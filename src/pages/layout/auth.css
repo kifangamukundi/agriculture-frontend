@@ -22,6 +22,10 @@
       color: #346856;
       text-align: center;
   }
+  .authH2{
+      color: red;
+      text-align: center;
+  }
   
   .authButton{
       width: 100%;

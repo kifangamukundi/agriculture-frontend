@@ -27,7 +27,7 @@ import { useSelector } from "react-redux";
 
 function App() {
   // const admin = useSelector((state) => state.user.currentUser.roles["ROLE_ADMIN"]);
-  const isLoggedIn = useSelector((state) => state?.user?.accessToken);
+  const isLoggedIn = useSelector((state) => state?.users?.currentUser?.accessToken);
   return (
     <Router>
       <Routes>

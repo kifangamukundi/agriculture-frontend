@@ -2,20 +2,25 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import { useDispatch, useSelector  } from "react-redux";
-import { loginUser, getUserError, getUserStatus } from '../../redux/userSlice';
-import CircularProgress from '@mui/material/CircularProgress';
+import { loginUser, getUsersStatus, getUsersError } from '../../redux/userSlice';
+
+import LoadingButton from '@mui/lab/LoadingButton';
+import LoginIcon from '@mui/icons-material/Login';
+import Divider from '@mui/material/Divider';
 
 const Login = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const userStatus = useSelector(getUserStatus);
-  const userError = useSelector(getUserError);
+  const userStatus = useSelector(getUsersStatus);
+  const userError = useSelector(getUsersError);
   // New feature
   const [values, setValues] = useState({
     username: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState([]);
 
   const inputs = [
     {
@@ -44,19 +49,18 @@ const Login = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ ...values }))
-    .then(data => {
-      // do something with data
-      console.log("I was called")
-      navigate("/")
+    setLoading(true);
+    dispatch(loginUser({ ...values })).unwrap()
+    .then((originalPromiseResult) => {
+      // handle result here
+      console.log(originalPromiseResult)
+      navigate("/");
     })
-    .catch(error => {
-     // do something with error
-     console.log("I was called")
-     navigate("/Login")
-    })
-    .finally(() => {
-      console.log("finally called")
+    .catch((rejectedValueOrSerializedError) => {
+      // handle error here
+      console.log(rejectedValueOrSerializedError)
+      setApiError(rejectedValueOrSerializedError)
+      setLoading(false)
     })
   };
 
@@ -66,8 +70,13 @@ const Login = () => {
 
   return (
     <div className="auth">
-      <form onSubmit={handleClick}>
+      <form>
         <h1 className="authH1">Login</h1>
+
+        {(userStatus === 'failed') && (
+          <h2 className="authH2">{apiError.message}!</h2>
+        )}
+
         {inputs.map((input) => (
           <FormInput
             key={input.id}
@@ -76,9 +85,18 @@ const Login = () => {
             onChange={onChange}
           />
         ))}
-        {userStatus === 'loading' ? <CircularProgress /> : <button className="authButton">Submit</button>}
-        {userStatus === 'failed' && <div className="error">{userError}</div>}
+        <LoadingButton
+        size="small"
+        color="success"
+        onClick={handleClick}
+        loading={loading}
+        loadingPosition="start"
+        startIcon={<LoginIcon />}
+        variant="contained">
+        Login
+        </LoadingButton>
         <label className="authLabel">Don't have an account? <Link to="/Register">Register</Link></label>
+        <Divider />
       </form>
     </div>
   );

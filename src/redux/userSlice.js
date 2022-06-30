@@ -1,33 +1,50 @@
-import {createSlice, createAsyncThunk, createSelector, createEntityAdapter} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { publicRequest, userRequest } from "../requestMethods";
 
-const userAdapter = createEntityAdapter({
-    sortComparer: (a, b) => b.date.localeCompare(a.date)
-})
-
-const initialState = userAdapter.getInitialState({
-    currentUser: null,
+// Initial state comprising of { "idle", "loading", "succeeded", "failed" }
+const initialState = {
+    currentUser: [],
+    users: [],
     status: 'idle',
-    error: null,
-})
+    error: null
+}
 
-export const registerUser = createAsyncThunk('user/registerUser', async () => {
-    const response = await publicRequest.post("/auth/signup")
-    return response.data
+// Register a new user
+export const addNewUser = createAsyncThunk('users/addNewUser', async (initialUser, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI
+    try {
+        const response = await publicRequest.post("/auth/signup", initialUser)
+        return response.data
+    } catch (error) {
+        console.log(error.response.data);
+        return rejectWithValue(error.response.data)
+    }
 })
-
-export const loginUser = createAsyncThunk('user/loginUser', async (initialProduct) => {
-    const response = await publicRequest.post("/auth/signin", initialProduct)
-    return response.data
+// Login a user
+export const loginUser = createAsyncThunk('users/loginUser', async (initialUser, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI
+    try {
+        const response = await publicRequest.post("/auth/signin", initialUser)
+        return response.data
+    } catch (error) {
+        console.log(error.response.data);
+        return rejectWithValue(error.response.data)
+    }
 })
-
-export const loginOutUser = createAsyncThunk('user/loginOutUser', async (initialProduct) => {
-    const response = await publicRequest.post("/auth/signup", initialProduct)
-    return response.data
+// Logout a user
+export const logOutUser = createAsyncThunk('users/logOutUser', async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI
+    try {
+        const response = await localStorage.clear();
+        console.log(localStorage.getItem("persist:root"));
+    } catch (error) {
+        console.log(error);
+        return rejectWithValue(error)
+    }
 })
 
 const userSlice = createSlice({
-    name: 'user',
+    name: 'users',
     initialState,
     reducers: {
         reactionAdded(state, action) {
@@ -43,48 +60,61 @@ const userSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(registerUser.pending, (state, action) => {
+
+            // Register a new user actions
+            .addCase(addNewUser.pending, (state, action) => {
                 state.status = 'loading'
+                state.error = null
             })
-            .addCase(registerUser.fulfilled, (state, action) => {
-                return action.payload;
+            .addCase(addNewUser.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.error = null
             })
-            .addCase(registerUser.rejected, (state, action) => {
+            .addCase(addNewUser.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message
             })
+
+            // Login a user actions
             .addCase(loginUser.pending, (state, action) => {
                 state.status = 'loading'
+                state.error = null
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-                return action.payload;
+                state.status = 'succeeded'
+                state.currentUser = action.payload
+                state.error = null
             })
             .addCase(loginUser.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.error.message
+            })
+
+            // Logout a user actions
+            .addCase(logOutUser.pending, (state, action) => {
+                state.status = 'loading'
+                state.error = null
+            })
+            .addCase(logOutUser.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.currentUser = []
+                state.error = null
+            })
+            .addCase(logOutUser.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message
             })
     }
 })
 
-//getSelectors creates these selectors and we rename them with aliases using destructuring
-export const {
-    selectAll: selectAllProducts,
-    selectById: selectProductById,
-    selectIds: selectProductIds
-    // Pass in a selector that returns the products slice of state
-} = userAdapter.getSelectors(state => state.user)
+export const selectAllUsers = (state) => state.users.users;
+export const getUsersStatus = (state) => state.users.status;
+export const getUsersError = (state) => state.users.error;
 
+export const selectUserById = (state, userId) =>
+    state?.users?.users?.find(user => user._id === userId);
 
-export const getUserStatus = (state) => state.user.status;
-export const getUserError = (state) => state.user.error;
-
-export const selectproductsByUser = createSelector(
-    [selectAllProducts, (state, userId) => userId],
-    (products, userId) => products.filter(product => product.userId === userId)
-)
-
-export const { increaseCount, reactionAdded } = userSlice.actions
-
-export const userSelector = (state) => state.user;
+// We could destructure the actions here, but we don't have them yet
+export const { productAdded } = userSlice.actions
 
 export default userSlice.reducer
