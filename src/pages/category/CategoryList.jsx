@@ -13,11 +13,11 @@ export default function CategoryList() {
   const categories = useSelector((state) => state.category.categories.categories);
 
   useEffect(() => {
-    getCategories(dispatch);
+    // getCategories(dispatch);
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    deleteCategory(id, dispatch);
+    // deleteCategory(id, dispatch);
   };
 
   return (

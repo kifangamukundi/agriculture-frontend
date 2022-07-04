@@ -6,15 +6,15 @@ import {format} from "timeago.js"
 export default function WidgetLg() {
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const getproducts = async () => {
-      try {
-        const res = await userRequest.get("product/all");
-        setProducts(res.data.products);
-      } catch {}
-    };
-    getproducts();
-  }, []);
+  // useEffect(() => {
+  //   const getproducts = async () => {
+  //     try {
+  //       const res = await userRequest.get("product/all");
+  //       setProducts(res.data.products);
+  //     } catch {}
+  //   };
+  //   getproducts();
+  // }, []);
   const Button = ({ type }) => {
     return <button className={"widgetLgButton " + type}>{type}</button>;
   };

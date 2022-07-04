@@ -51,7 +51,7 @@ export default function NewCategory() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const category = { ...inputs, img: downloadURL };
-          addCategory(category, dispatch);
+          // addCategory(category, dispatch);
         });
       }
     );

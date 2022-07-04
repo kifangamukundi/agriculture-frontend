@@ -12,7 +12,7 @@ const initialState = {
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const response = await publicRequest.get("/product/all")
+        const response = await publicRequest.get("/products")
         return response.data
     } catch (error) {
         console.log(error.response.data);
@@ -24,7 +24,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_
 export const addNewProduct = createAsyncThunk('products/addNewProduct', async (initialProduct, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
-        const response = await userRequest.post("/product", initialProduct)
+        const response = await userRequest.post("/products", initialProduct)
         return response.data
     } catch (error) {
         console.log(error.response.data);
@@ -37,7 +37,7 @@ export const updateProduct = createAsyncThunk('products/updateProduct', async (i
     const { id } = initialProduct;
     const { rejectWithValue } = thunkAPI
     try {
-        const response = await userRequest.patch(`/product/${id}`, initialProduct)
+        const response = await userRequest.patch(`/products/${id}`, initialProduct)
         return response.data
     } catch (error) {
         console.log(error.response.data);
@@ -51,7 +51,7 @@ export const deleteProduct = createAsyncThunk('products/deletePost', async (init
     const { rejectWithValue } = thunkAPI
     const { id } = initialProduct;
     try {
-        const response = await userRequest.delete(`/product/${id}`)
+        const response = await userRequest.delete(`/products/${id}`)
         if (response?.status === 200) return initialProduct;
         return `${response?.status}: ${response?.statusText}`;
     } catch (error) {
