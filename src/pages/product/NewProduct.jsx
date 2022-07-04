@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../layout/new.css";
-import { Link, useNavigate , useLocation } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import {
   getStorage,
   ref,
@@ -22,6 +22,34 @@ import Stack from '@mui/material/Stack';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Chip from '@mui/material/Chip';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name, categoryName, theme) {
+  return {
+    fontWeight:
+      categoryName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
 export default function NewProduct() {
   const dispatch = useDispatch();
   let navigate = useNavigate ();
@@ -32,6 +60,21 @@ export default function NewProduct() {
   const productError = useSelector(getProductsError);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState([]);
+
+  // Categories stuff
+  const theme = useTheme();
+  const categories = useSelector((state) => state?.categories?.categories?.categories);
+  const [categoryName, setCategoryName] = useState([]);
+
+  const handleCategoryChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCategoryName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
 
   const handleChange = (e) => {
     setInputs((prev) => {
@@ -69,7 +112,7 @@ export default function NewProduct() {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const product = { ...inputs, productImage: downloadURL };
+          const product = { ...inputs, productImage: downloadURL, categories: categoryName };
           dispatch(addNewProduct(product)).unwrap()
           .then((originalPromiseResult) => {
             // handle result here
@@ -131,6 +174,39 @@ export default function NewProduct() {
                 rows={4}
                 maxRows={6}
               />
+            </Stack>
+
+            <Stack sx={{ width: '100%' }} spacing={2}>
+              <label>Categories</label>
+              <FormControl sx={{ m: 1, width: 500 }} >
+                <InputLabel id="demo-multiple-chip-label">Select</InputLabel>
+                <Select
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  multiple
+                  value={categoryName}
+                  onChange={handleCategoryChange}
+                  input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      {selected.map((value, key) => (
+                        <Chip key={key} label={value} color="success"/>
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {categories.map((category) => (
+                    <MenuItem
+                      value={category._id}
+                      key={category._id}
+                      style={getStyles(category, categoryName, theme)}
+                    >
+                      {category.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Stack>
 
             <Stack sx={{ width: '25%' }} spacing={2}>

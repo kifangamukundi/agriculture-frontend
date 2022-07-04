@@ -1,18 +1,14 @@
 import "../layout/view.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { DoneOutline, Title, List } from "@material-ui/icons";
 import { useSelector } from "react-redux";
-import { selectAllProducts, getProductsStatus, getProductsError } from "../../redux/productSlice";
+import { selectProductById, getProductsStatus, getProductsError } from "../../redux/productSlice";
 
 export default function ViewProduct() {
-  const location = useLocation();
-  const productId = location.pathname.split("/")[2];
+  const { productId } = useParams();
+  const product = useSelector((state) => selectProductById(state, productId))
+  console.log(product);
 
-  const product = useSelector((state) =>
-    state.products.products.products.find((product) => product._id === productId)
-  );
-
-  const products = useSelector(selectAllProducts).products.find(product => product._id === productId);
   const productStatus = useSelector(getProductsStatus);
   const productError = useSelector(getProductsError);
 
@@ -39,9 +35,9 @@ export default function ViewProduct() {
             <span className="viewShowTitle">Product Categories</span>
 
             {product.categories.map(category => (
-            <div className="viewShowInfo">
+            <div className="viewShowInfo" key={category._id}>
               <List className="viewShowIcon" />
-              <span className="viewShowInfoTitle" key={category._id}>{category.title}</span>
+              <span className="viewShowInfoTitle">{category.title}</span>
             </div>
             ))}
           </div>

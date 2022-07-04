@@ -1,7 +1,7 @@
 import "../layout/list.css";
-import { Link, useNavigate , useLocation, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
@@ -15,16 +15,24 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 
-import { useSelector } from "react-redux";
-import { fetchProducts, deleteProduct, selectProductById, getProductsStatus, getProductsError } from "../../redux/productSlice";
+import Typography from '@mui/material/Typography';
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+
+import Chip from '@mui/material/Chip';
+
+import { selectAllProducts, fetchProducts, deleteProduct, getProductsStatus, getProductsError } from "../../redux/productSlice";
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  const location = useLocation();
   let navigate = useNavigate ();
-  const { productId } = useParams();
-  const product = useSelector((state) => selectProductById(state, Number(productId)))
-  const products = useSelector((state) => state?.products?.products?.products);
+  const products = useSelector((state) => selectAllProducts(state))
+  console.log(products);
   const user = useSelector((state) => state?.users?.currentUser?.roles);
 
   // Status and error from the API call
@@ -51,6 +59,9 @@ export default function ProductList() {
       console.log(rejectedValueOrSerializedError);
     })
   };
+  const handleChip = () => {
+    console.info('You clicked the Chip.');
+  };
 
   return (
     <div className="list">
@@ -74,68 +85,71 @@ export default function ProductList() {
           </Alert>
         </Stack>
       )}
-
-      <div className="listContainer">
-        <div className="listShow">
-
+        
+      <List sx={{ width: '100%', maxWidth: "75%", bgcolor: 'background.paper' }}>
         {products && products.length ? products.map(product => (
-          <div className="listShowBottom" key={product._id}>
+          <div>
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt={product.title} src={product.productImage} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={product.title}
+                secondary={
+                  <Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {product.title.substring(0, 20)}
+                    </Typography>
+                      - {product.description.substring(0, 65)}...
 
-            <div className="listUpdateRight">
-              <div className="listUpdateUpload">
-                    <img
-                    className="listUpdateImg"
-                    src={product.productImage}
-                    alt=""
-                    />
-              </div>
-            </div>
+                    <Box sx={{ width: 500, maxWidth: '100%',}} >
+                      {product.categories && product.categories.length ? product.categories.map(category => (
+                        <Link to={"/ViewCategory/" + category._id} style={{ textDecoration: 'none' }}>
+                          <Chip label={category.title} onClick={handleChip} />
+                        </Link>
+                      )) : null}
+                    </Box>
 
-            <span className="listShowTitle"><h1>{product.title}</h1></span>
-            <div className="listShowInfo">
-              <span className="listShowInfoTitle">{product.description}</span>
-            </div>
+                    <Box sx={{ width: 500, maxWidth: '100%',}} >
+                      <Link to={"/ViewProduct/" + product._id}>
+                        <Tooltip title="View">
+                          <IconButton>
+                            <PreviewIcon color="success"/>
+                          </IconButton>
+                        </Tooltip>
+                      </Link>
 
-            <div className="listShowActions">
-              
-              <div className="listShowInfo">
-                <Link to={"/ViewProduct/" + product._id}>
-                  <Tooltip title="View">
-                    <IconButton>
-                      <PreviewIcon color="success"/>
-                    </IconButton>
-                  </Tooltip>
-                </Link>
-              </div>
-
-              {(user?.includes("ROLE_MODERATOR") || user?.includes("ROLE_ADMIN")) && (
-                <div className="listShowInfo">
-                  <Link to={"/EditProduct/" + product._id}>
-                    <Tooltip title="Edit">
-                      <IconButton>
-                        <EditIcon color="success"/>
-                      </IconButton>
-                    </Tooltip>
-                  </Link>
-                </div>
-              )}
-
-              {(user?.includes("ROLE_MODERATOR") || user?.includes("ROLE_ADMIN")) && (
-                <div className="listShowInfo">
-                    <Tooltip title="Delete">
-                      <IconButton onClick={() => handleDelete(product._id)}>
-                        <DeleteIcon color="success"/>
-                      </IconButton>
-                    </Tooltip>
-                </div>
-              )}
-
-            </div>
+                      {(user?.includes("ROLE_MODERATOR") || user?.includes("ROLE_ADMIN")) && (
+                        <Link to={"/EditProduct/" + product._id}>
+                          <Tooltip title="Edit">
+                            <IconButton>
+                              <EditIcon color="success"/>
+                            </IconButton>
+                          </Tooltip>
+                        </Link>
+                      )}
+                      
+                      {(user?.includes("ROLE_MODERATOR") || user?.includes("ROLE_ADMIN")) && (
+                        <Tooltip title="Delete">
+                          <IconButton onClick={() => handleDelete(product._id)}>
+                            <DeleteIcon color="success"/>
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                    </Box>
+                  </Fragment>
+                }
+              />
+            </ListItem>
+            <Divider variant="inset" component="li" />
           </div>
         )): null}
-
-        </div>
-      </div>
+      </List>  
     </div>
   );
 }

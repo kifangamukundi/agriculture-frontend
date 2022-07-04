@@ -152,7 +152,7 @@ const productsSlice = createSlice({
     }
 })
 
-export const selectAllProducts = (state) => state.products.products;
+export const selectAllProducts = (state) => state?.products?.products?.products;
 export const getProductsStatus = (state) => state.products.status;
 export const getProductsError = (state) => state.products.error;
 
